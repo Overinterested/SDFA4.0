@@ -1,0 +1,713 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Functional Annotation · SDFA: Standardized Decompsition Format Analyses for Structural Variations</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 3.7.3">
+        <meta name="author" content="overinterested">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-pagefooter-freedom/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism-one-light.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-summary-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-language-picker/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-password-pro/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ngaa.html" />
+    
+    
+    <link rel="prev" href="merge.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]};
+    </script>
+
+    
+        <link rel="shortcut icon" href="/assets/logo32.ico" type="image/x-icon">
+    
+    
+    
+    
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/logo.png">
+    
+    
+        
+    
+    
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    About SDFA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../download.html">
+            
+                <a href="../../download.html">
+            
+                    
+                    Download and Install
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <a target="_blank" href="https://pmglab.top/SDFA/api/">
+            
+                    
+                    API Document
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Usage Document</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    Build SDF Archives
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    Build SDF from VCF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../sdf_build/file2sdf.html">
+            
+                <a href="../sdf_build/file2sdf.html">
+            
+                    
+                    Build SDF from other files
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../sdf_toolkit/gui.html">
+            
+                <a href="../sdf_toolkit/gui.html">
+            
+                    
+                    SDF Operation Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="../sdf_toolkit/gui.html">
+            
+                <a href="../sdf_toolkit/gui.html">
+            
+                    
+                    SDF GUI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="../sdf_toolkit/filter.html">
+            
+                <a href="../sdf_toolkit/filter.html">
+            
+                    
+                    Filter Mode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="../sdf_toolkit/extract.html">
+            
+                <a href="../sdf_toolkit/extract.html">
+            
+                    
+                    Sample Extraction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.4" data-path="../sdf_toolkit/concat.html">
+            
+                <a href="../sdf_toolkit/concat.html">
+            
+                    
+                    Concatenate Multiple SDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="merge.html">
+            
+                <a href="merge.html">
+            
+                    
+                    SDFA Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="merge.html">
+            
+                <a href="merge.html">
+            
+                    
+                    Sample Merge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.3.2" data-path="annotate.html">
+            
+                <a href="annotate.html">
+            
+                    
+                    Functional Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="ngaa.html">
+            
+                <a href="ngaa.html">
+            
+                    
+                    Numeric Gene Feature Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="gwas.html">
+            
+                <a href="gwas.html">
+            
+                    
+                    SV-based GWAS
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Functional Annotation</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="functional-annotation">Functional Annotation</h1>
+<p>To further locate susceptible SVs and explore their biological mechanisms, it is often necessary to perform functional annotation on SVs. In order to quickly conduct functional annotation for multiple samples and multiple resources, SDFA has designed the index sliding window algorithm shown in the figure below to accelerate the annotation process.</p>
+<p><img src="assets/image-20250512105744480.png" alt="image-20250512105744480" style="zoom:45%;"></p>
+<p>At the same time, in order to perform customized annotation for multiple resources, SDFA has designed the post-annotate annotation method. The output file can be customized through the configuration file shown in the figure below:</p>
+<div style="text-align: center;">
+    <img src="assets/image-20250513075553404.png" alt="image-20250511120941111" style="zoom:42%;">
+</div>
+
+<h2 id="configuration-file">Configuration File</h2>
+<p>SDFA draws on the post annotation concept of the <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0973-5" target="_blank">Vcfanno</a> tool and defines a configuration file for configuring annotation resources and output results. The specific explanation is as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Parameter Explanation</th>
+<th>Required or not<br>(<code>*</code> represents required, <code>.</code> represents optional)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[[annotation]]</code></td>
+<td>The start identifier for a new annotation resource</td>
+<td>*</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>The full path of the annotation resource file</td>
+<td>*</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Type of annotation resource<br>(3 types are supported: <code>gene</code>, <code>interval</code>, and <code>svdatabase</code>)</td>
+<td>*</td>
+</tr>
+<tr>
+<td><code>names</code></td>
+<td>Column names of the output results</td>
+<td>.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td>Column names of the input file</td>
+<td>.</td>
+</tr>
+<tr>
+<td><code>opts</code></td>
+<td>Functions corresponding to the output columns</td>
+<td><code>Needs to match the size of names</code></td>
+</tr>
+</tbody>
+</table>
+<p>Here we explain the above parameters through an example:</p>
+<blockquote>
+<p>[!NOTE|label:Example 1]</p>
+<p>Next, we will operate on the <code>interval_1.txt</code> file. This file is of the interval type, and its general content is:</p>
+<p><img src="assets/image-20250513080657520.png" alt="image-20250513080657520" style="zoom:50%;"></p>
+<p>Elements between single lines are separated by <code>\t</code>. Now we want to obtain the <code>COL1</code> column related to SV, so we set <code>fields=[&quot;COL1&quot;]</code> here. At the same time, we want the output column to be named <code>name</code>, so we set <code>names=[&quot;name&quot;]</code>. The final configuration file is as follows:</p>
+<pre class="language-"><code class="lang-shell"><span class="token punctuation">[</span><span class="token punctuation">[</span>annotation<span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token assign-left variable">file</span><span class="token operator">=</span>/Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/data/interval_1.txt
+<span class="token assign-left variable">type</span><span class="token operator">=</span>interval
+<span class="token assign-left variable">names</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">&quot;name&quot;</span><span class="token punctuation">]</span>
+<span class="token assign-left variable">fields</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">&quot;COL1&quot;</span><span class="token punctuation">]</span>
+<span class="token assign-left variable">opts</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">&quot;concat&quot;</span><span class="token punctuation">]</span>
+</code></pre>
+<p>After completing the above configuration file, we perform annotation through the following command:</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar annotate <span class="token punctuation">\</span>
+--config /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/data/config.txt  <span class="token punctuation">\</span>
+-t <span class="token number">4</span> -d /Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf <span class="token punctuation">\</span>
+-o /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/res
+</code></pre>
+<p>The results after annotation are as follows:</p>
+<p><img src="assets/image-20250513081321762.png" alt="image-20250513081321762" style="zoom:50%;"></p>
+<p>Among them, the fileID corresponds to different SV files in this folder (<code>/Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf</code>).</p>
+</blockquote>
+<h2 id="annotation-resources">Annotation Resources</h2>
+<p>SDFA supports integrating external databases for SV annotation, provided that the external data files meet the following basic format requirements:</p>
+<ul>
+<li>The tab character (<code>\t</code>) must be used as the delimiter.</li>
+<li>The annotation file must contain a header line, and the column names should start with the number sign (<code>#</code>) (lines starting with <code>##</code> will be ignored).</li>
+</ul>
+<p>In addition, when SDFA introduces interval annotation files and SV database files to annotate existing SV data, the following specific conditions must be met:</p>
+<ul>
+<li><p>For interval annotation files, the following requirements must be met:</p>
+<p>| Column | Name             | Type    | Example |
+| ------ | ---------------- | ------- | ------- |
+| 1      | Chromosome       | String  | chr1    |
+| 2      | Start Position   | Integer | 1000    |
+| 3      | End Position     | Integer | 3000    |
+| 4      | [Feature 1 Name] | String  | V1      |
+| …      | …                | …       | …       |</p>
+</li>
+<li><p>For SV database files, the following requirements must be met:</p>
+<p>| Column | Name             | Type    | Example |
+| ------ | ---------------- | ------- | ------- |
+| 1      | Chromosome       | String  | chr1    |
+| 2      | Start Position   | Integer | 1000    |
+| 3      | End Position     | Integer | 3000    |
+| 4      | SV Length        | Integer | 2000    |
+| 5      | SV Type          | String  | DEL     |
+| 6      | [Feature 1 Name] | String  | V1      |
+| …      | …                | …       | …       |</p>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="merge.html" class="navigation navigation-prev " aria-label="Previous page: Sample Merge">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ngaa.html" class="navigation navigation-next " aria-label="Next page: Numeric Gene Feature Annotation">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Functional Annotation","level":"2.3.2","depth":2,"next":{"title":"Numeric Gene Feature Annotation","level":"2.3.3","depth":2,"path":"usage/sdfa_toolkit/ngaa.md","ref":"usage/sdfa_toolkit/ngaa.md","articles":[]},"previous":{"title":"Sample Merge","level":"2.3.1","depth":2,"path":"usage/sdfa_toolkit/merge.md","ref":"usage/sdfa_toolkit/merge.md","articles":[]},"dir":"ltr"},"config":{"plugins":["favicon-absolute","edit-link","-lunr","-search","search-plus","expandable-chapters-small","back-to-top-button","page-toc-button","katex","pagefooter-freedom","hide-element","-highlight","prism","prism-themes","github-buttons","summary-logo","code","todo","flexible-alerts","theme-comscore","language-picker","get-pdf","password-pro"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-one-light.css"],"lang":{"shell":"bash"}},"language-picker":{"grid-columns":2},"todo":{},"code":{"copyButtons":true},"favicon-absolute":{"favicon":"/assets/logo32.ico","appleTouchIconPrecomposed152":"/assets/logo.png","appleTouchIconMore":{},"appleTouchIconPrecomposedMore":{}},"hide-element":{"elements":[".gitbook-link"]},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"summary-logo":{"logo":"assets/department_logo.png","link":"https://pmglab.top","target":"_blank","style":"background:#24572c;max-width:300px"},"pagefooter-freedom":{"hide":true,"modify_label":"文档修订时间: ","modify_format":"YYYY-MM-DD HH:mm:ss","copyright":"Copyright ©彭文杰 all right reserved"},"theme-comscore":{},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]},"expandable-chapters-small":{},"flexible-alerts":{"style":"flat","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"},"comment":{"label":"Comment","icon":"fa fa-comments","className":"info"},"update":{"label":"Update","icon":"fa fa-upload","className":"tip"}},"password-pro":{"tip":"请输入该页面的访问密码:","errorTip":"密码错误, 请重新输入:","reject":"当前页面拒绝访问: 身份验证失败."},"get-pdf":{"prefix":"SDFA_usage","label":"","base":"https://pmglab.top/SDFA/en"},"edit-link":{"label":"","base":"https://github.com/Zhangliubin/honkit-docker/tree/main/multi-lang/"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"search-plus":{}},"theme":"default","author":"overinterested","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"SDFA: Standardized Decompsition Format Analyses for Structural Variations","language":"en","gitbook":"*","description":"SDFA is a high-performance toolset for structural variation storage and analysis"},"file":{"path":"usage/sdfa_toolkit/annotate.md","mtime":"2025-05-14T06:58:21.029Z","type":"markdown"},"gitbook":{"version":"3.7.3","time":"2025-05-14T09:38:42.239Z"},"basePath":"../..","book":{"language":"en"}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-summary-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-language-picker/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-get-pdf/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/md5.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

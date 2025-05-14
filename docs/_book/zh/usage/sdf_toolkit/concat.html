@@ -1,0 +1,625 @@
+
+<!DOCTYPE HTML>
+<html lang="zh" >
+    <head>
+        <meta charset="UTF-8">
+        <title>合并多个SDF文件 · SDFA: Standardized Decompsition Format Analyses for Structural Variations</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 3.7.3">
+        <meta name="author" content="overinterested">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-pagefooter-freedom/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism-one-light.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-summary-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-language-picker/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-password-pro/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../sdfa_toolkit/merge.html" />
+    
+    
+    <link rel="prev" href="extract.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]};
+    </script>
+
+    
+        <link rel="shortcut icon" href="/assets/logo32.ico" type="image/x-icon">
+    
+    
+    
+    
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/logo.png">
+    
+    
+        
+    
+    
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="輸入並搜尋" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">项目简介</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    关于 SDFA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../download.html">
+            
+                <a href="../../download.html">
+            
+                    
+                    下载与安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <a target="_blank" href="https://pmglab.top/SDFA/api/">
+            
+                    
+                    API 文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">使用手册</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    构建 SDF 存档
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    从 VCF 构建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../sdf_build/file2sdf.html">
+            
+                <a href="../sdf_build/file2sdf.html">
+            
+                    
+                    自定义构建API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="gui.html">
+            
+                <a href="gui.html">
+            
+                    
+                    SDF文件操作集
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="gui.html">
+            
+                <a href="gui.html">
+            
+                    
+                    图形界面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="filter.html">
+            
+                <a href="filter.html">
+            
+                    
+                    过滤模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="extract.html">
+            
+                <a href="extract.html">
+            
+                    
+                    样本提取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2.4" data-path="concat.html">
+            
+                <a href="concat.html">
+            
+                    
+                    合并多个SDF文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    SDFA 工具集
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    样本合并
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../sdfa_toolkit/annotate.html">
+            
+                <a href="../sdfa_toolkit/annotate.html">
+            
+                    
+                    功能注释
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../sdfa_toolkit/ngaa.html">
+            
+                <a href="../sdfa_toolkit/ngaa.html">
+            
+                    
+                    数值化基因注释
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="../sdfa_toolkit/gwas.html">
+            
+                <a href="../sdfa_toolkit/gwas.html">
+            
+                    
+                    SV-based GWAS
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本書使用 HonKit 釋出
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >合并多个SDF文件</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="合并多个sdf文件">合并多个SDF文件</h1>
+<p>连接即按行添加新的变异位点，最常见的情形是将分散在不同文件（按照染色体、按照变异位点数量、文件大小储存）的同一批受试者的变异位点重新拼接回单独的文件（例如：UKB的 Whole genome GraphTyper SV data [interim 150k release] 数据）。使用以下指令对 SDF 文件进行连接：</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar concat <span class="token punctuation">[</span>options<span class="token punctuation">]</span>
+</code></pre>
+<p>多个文件合并时会检查所有文件的样本名，并在每个线程中使用 2路归并排序 进行合并。合并过程中保证坐标有序并持续更新META信息。</p>
+<div style="text-align: center;">
+    <img src="assets/image-20250511144100982.png" alt="image-20250511120941111" style="zoom:60%;">
+</div>
+
+<blockquote>
+<p>[!NOTE|label:Example 1]</p>
+<p>下面是对3个单样本文件进行合并（此处假设3个文的样本名一致）：</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar concat -d ./data -o ./ -t <span class="token number">4</span>
+</code></pre>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="extract.html" class="navigation navigation-prev " aria-label="Previous page: 样本提取">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../sdfa_toolkit/merge.html" class="navigation navigation-next " aria-label="Next page: SDFA 工具集">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"合并多个SDF文件","level":"2.2.4","depth":2,"next":{"title":"SDFA 工具集","level":"2.3","depth":1,"path":"usage/sdfa_toolkit/merge.md","ref":"usage/sdfa_toolkit/merge.md","articles":[{"title":"样本合并","level":"2.3.1","depth":2,"path":"usage/sdfa_toolkit/merge.md","ref":"usage/sdfa_toolkit/merge.md","articles":[]},{"title":"功能注释","level":"2.3.2","depth":2,"path":"usage/sdfa_toolkit/annotate.md","ref":"usage/sdfa_toolkit/annotate.md","articles":[]},{"title":"数值化基因注释","level":"2.3.3","depth":2,"path":"usage/sdfa_toolkit/ngaa.md","ref":"usage/sdfa_toolkit/ngaa.md","articles":[]},{"title":"SV-based GWAS","level":"2.3.4","depth":2,"path":"usage/sdfa_toolkit/gwas.md","ref":"usage/sdfa_toolkit/gwas.md","articles":[]}]},"previous":{"title":"样本提取","level":"2.2.3","depth":2,"path":"usage/sdf_toolkit/extract.md","ref":"usage/sdf_toolkit/extract.md","articles":[]},"dir":"ltr"},"config":{"plugins":["favicon-absolute","edit-link","-lunr","-search","search-plus","expandable-chapters-small","back-to-top-button","page-toc-button","katex","pagefooter-freedom","hide-element","-highlight","prism","prism-themes","github-buttons","summary-logo","code","todo","flexible-alerts","theme-comscore","language-picker","get-pdf","password-pro"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-one-light.css"],"lang":{"shell":"bash"}},"language-picker":{"grid-columns":2},"todo":{},"code":{"copyButtons":true},"favicon-absolute":{"favicon":"/assets/logo32.ico","appleTouchIconPrecomposed152":"/assets/logo.png","appleTouchIconMore":{},"appleTouchIconPrecomposedMore":{}},"hide-element":{"elements":[".gitbook-link"]},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"summary-logo":{"logo":"assets/department_logo.png","link":"https://pmglab.top","target":"_blank","style":"background:#24572c;max-width:300px"},"pagefooter-freedom":{"hide":true,"modify_label":"文档修订时间: ","modify_format":"YYYY-MM-DD HH:mm:ss","copyright":"Copyright ©彭文杰 all right reserved"},"theme-comscore":{},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]},"expandable-chapters-small":{},"flexible-alerts":{"style":"flat","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"},"comment":{"label":"Comment","icon":"fa fa-comments","className":"info"},"update":{"label":"Update","icon":"fa fa-upload","className":"tip"}},"password-pro":{"tip":"请输入该页面的访问密码:","errorTip":"密码错误, 请重新输入:","reject":"当前页面拒绝访问: 身份验证失败."},"get-pdf":{"prefix":"SDFA_usage","label":"","base":"https://pmglab.top/SDFA/en"},"edit-link":{"label":"","base":"https://github.com/Zhangliubin/honkit-docker/tree/main/multi-lang/"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"search-plus":{}},"theme":"default","author":"overinterested","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"SDFA: Standardized Decompsition Format Analyses for Structural Variations","language":"zh","gitbook":"*","description":"SDFA is a high-performance toolset for structural variation storage and analysis"},"file":{"path":"usage/sdf_toolkit/concat.md","mtime":"2025-05-14T06:52:30.011Z","type":"markdown"},"gitbook":{"version":"3.7.3","time":"2025-05-14T09:38:42.239Z"},"basePath":"../..","book":{"language":"zh"}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-summary-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-language-picker/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-get-pdf/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/md5.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

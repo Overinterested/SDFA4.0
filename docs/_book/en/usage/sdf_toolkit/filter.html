@@ -1,0 +1,793 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Filter Mode · SDFA: Standardized Decompsition Format Analyses for Structural Variations</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 3.7.3">
+        <meta name="author" content="overinterested">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-pagefooter-freedom/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism-one-light.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-summary-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-language-picker/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-password-pro/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="extract.html" />
+    
+    
+    <link rel="prev" href="gui.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]};
+    </script>
+
+    
+        <link rel="shortcut icon" href="/assets/logo32.ico" type="image/x-icon">
+    
+    
+    
+    
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/logo.png">
+    
+    
+        
+    
+    
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    About SDFA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../download.html">
+            
+                <a href="../../download.html">
+            
+                    
+                    Download and Install
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <a target="_blank" href="https://pmglab.top/SDFA/api/">
+            
+                    
+                    API Document
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Usage Document</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    Build SDF Archives
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../sdf_build/vcf2sdf.html">
+            
+                <a href="../sdf_build/vcf2sdf.html">
+            
+                    
+                    Build SDF from VCF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../sdf_build/file2sdf.html">
+            
+                <a href="../sdf_build/file2sdf.html">
+            
+                    
+                    Build SDF from other files
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="gui.html">
+            
+                <a href="gui.html">
+            
+                    
+                    SDF Operation Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="gui.html">
+            
+                <a href="gui.html">
+            
+                    
+                    SDF GUI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2.2" data-path="filter.html">
+            
+                <a href="filter.html">
+            
+                    
+                    Filter Mode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="extract.html">
+            
+                <a href="extract.html">
+            
+                    
+                    Sample Extraction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.4" data-path="concat.html">
+            
+                <a href="concat.html">
+            
+                    
+                    Concatenate Multiple SDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    SDFA Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    Sample Merge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../sdfa_toolkit/annotate.html">
+            
+                <a href="../sdfa_toolkit/annotate.html">
+            
+                    
+                    Functional Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../sdfa_toolkit/ngaa.html">
+            
+                <a href="../sdfa_toolkit/ngaa.html">
+            
+                    
+                    Numeric Gene Feature Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="../sdfa_toolkit/gwas.html">
+            
+                <a href="../sdfa_toolkit/gwas.html">
+            
+                    
+                    SV-based GWAS
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Filter Mode</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="filter-mode">Filter Mode</h1>
+<p>Compared with single - nucleotide polymorphism (SNP), the filtering and screening of SV often lack a unified standard, and the screening attributes are more diverse (possibly including INFO, QUAL, GT fields, etc.).</p>
+<p>To perform more comprehensive SV filtering, SDFA has a rich set of built - in filtering functions. Specifically, it mainly covers two aspects of filtering:</p>
+<ul>
+<li><code>Genotype level</code>：Set quality control information for genotype filtering - set those that do not meet the conditions as<code>./.</code></li>
+<li><code>SV level</code>：Set a custom function to filter multiple VCF fields such as <code>CHR</code> and <code>ID</code> of the current SV record</li>
+</ul>
+<p>The specific instructions are</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar filter -d <span class="token punctuation">[</span>input_dir<span class="token punctuation">]</span> -o <span class="token punctuation">[</span>output_dir<span class="token punctuation">]</span> <span class="token punctuation">[</span>options<span class="token punctuation">]</span>
+</code></pre>
+<h2 id="genotype-filter">Genotype Filter</h2>
+<p>Use the following instructions for filtering:</p>
+<pre class="language-"><code class="lang-shell">--filter-gty <span class="token operator">&lt;</span>format_attr<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>function<span class="token operator">&gt;</span>
+</code></pre>
+<p>The above command line filters the specified <code>format_attr</code>, and <code>function</code> is an expression that returns a <code>boolean</code> value.</p>
+<p>To facilitate users to directly operate on the values of the quality control attributes of each genotype, we directly use <code>value</code> in the function to represent the value of a single genotype. Now, let&apos;s take an example:</p>
+<blockquote>
+<p>[!NOTE|label:Example 1]</p>
+<p>We filter the genotypes of all SDF files in the <code>./data</code> folder. The filtering quality control attribute is <code>GQ</code>, and the filtering condition is <code>(int)value&gt;20</code>. The output is saved to the <code>./folder</code>:</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar filter -d ./data -o ./ --filter-gty GQ <span class="token punctuation">(</span>int<span class="token punctuation">)</span>value<span class="token operator">&gt;</span><span class="token number">20</span>
+</code></pre>
+<p>If the SDF file is a multi-sample file, perform the above-mentioned conditional filtering on the genotypes of each sample in sequence.</p>
+</blockquote>
+<p>To simplify the conversion logic and reduce the storage space of <code>metric</code> field data, we encapsulate common quality control attributes into specific types to facilitate users to operate directly. The details are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Storage Class</th>
+<th style="text-align:left">Storage Type</th>
+<th style="text-align:left">Value Type</th>
+<th style="text-align:left">Quality control attributes</th>
+<th style="text-align:left">Example</th>
+<th style="text-align:left">Example Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SingleIntValueBox</td>
+<td style="text-align:left"><code>int</code> List</td>
+<td style="text-align:left">Single <code>int</code> value</td>
+<td style="text-align:left"><code>DP</code>,<code>DR</code>,<code>DV</code><br><code>GQ</code>,<code>MD</code>,<code>PP</code></td>
+<td style="text-align:left"><code>--filter-gty DP (int)values&gt;10</code></td>
+<td style="text-align:left">Set the genotype to./ when the DP attribute value is &lt;= 10.</td>
+</tr>
+<tr>
+<td>TwoIntValueBox</td>
+<td style="text-align:left"><code>int</code> List</td>
+<td style="text-align:left">IntList instance composed of 2 <code>int</code> values</td>
+<td style="text-align:left"><code>AD</code>,<code>RA</code></td>
+<td style="text-align:left"><code>--filter-gty AD ((IntList)values).get(0)&gt;10</code></td>
+<td style="text-align:left">Set the genotype to./ when the first int value of the AD attribute value is &lt;= 10.</td>
+</tr>
+<tr>
+<td>ThreeIntValueBox</td>
+<td style="text-align:left"><code>int</code> List</td>
+<td style="text-align:left">IntList instance composed of 3 <code>int</code> values</td>
+<td style="text-align:left"><code>PL</code></td>
+<td style="text-align:left"><code>--filter-gty PL ((IntList)values).get(0)&gt;10</code></td>
+<td style="text-align:left">Set the genotype to./ when the first int value of the PL attribute value is &lt;= 10.</td>
+</tr>
+<tr>
+<td>SingleStringValueBox</td>
+<td style="text-align:left"><code>string</code> List</td>
+<td style="text-align:left">Single <code>string</code> value</td>
+<td style="text-align:left"><code>FT</code> <br>others</td>
+<td style="text-align:left"><code>--filter-gty FT (string)values.equals(\&quot;TRUE\&quot;)</code></td>
+<td style="text-align:left">Set the genotype with the FT attribute not being TR</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sv-filter">SV Filter</h2>
+<p>Similar to the instructions for genotypes, the instructions for SV filtering are as follows:</p>
+<pre class="language-"><code class="lang-shell">--filter-sv <span class="token operator">&lt;</span>sv_attr<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>function<span class="token operator">&gt;</span>
+</code></pre>
+<p>The above command line filters the specified <code>sv_attr</code>, and <code>function</code> is a JAVA expression that returns a <code>boolean</code> value. Now, let&apos;s take an example:</p>
+<blockquote>
+<p>[!NOTE|label:Example 2]</p>
+<p>We filter for <code>IMPRECISE</code> in the INFO field. When this field exists, we filter the SV:</p>
+<pre class="language-"><code class="lang-shell">java -jar sdfa.jar -d ./data -o ./ --filter-sv IMPRECISE value<span class="token operator">!=</span>null
+</code></pre>
+</blockquote>
+<p>In the above example, the <code>sv_attr</code> is IMPRECISE. In the SDFA design, there is a certain order for the positioning and acquisition of <code>sv_attr</code>. The following is the comprehensive filtering order:</p>
+<table>
+<thead>
+<tr>
+<th>INDEX</th>
+<th>Match Field</th>
+<th>Value Type</th>
+<th>Value Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>CHR</code></td>
+<td><code>string</code></td>
+<td>Obtain the chromosome name of SV</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>ID</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the ID value of SV</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>REF</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the REF value of SV</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>ALT</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the ALT value of SV</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>QUAL</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the QUAL value of SV</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>FILTER</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the FILTER value of SV</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>INFO</code></td>
+<td><code>List<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Bytes</span><span class="token punctuation">&gt;</span></span></code></td>
+<td>Obtain all INFO field values of SV</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>FORMAT</code></td>
+<td><code>List<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Bytes</span><span class="token punctuation">&gt;</span></span></code></td>
+<td>Obtain the quality control values of all genotypes of SV</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>GT</code></td>
+<td><code>CacheGenotypes</code></td>
+<td>Obtain the genotypes of all samples under SV</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>LEN</code></td>
+<td><code>int</code></td>
+<td>Obtain the LEN value of SV</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>SDF_FIELD_NAME</code></td>
+<td><code>Object</code></td>
+<td>Obtain the value of SV in <code>SDF_FIELD_NAME</code> <br>(for details, please refer to the SDF structure)</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>INFO_ATTR</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the value of SV in <code>INFO</code> where the KEY is <code>INFO_ATTR</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>FORMAT_ATTR</code></td>
+<td><code>Bytes</code></td>
+<td>Obtain the value of SV in <code>FORMAT</code> where the KEY is <code>FORMAT_ATTR</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>UNKNOWN</td>
+<td>ERROR</td>
+<td>.</td>
+</tr>
+</tbody>
+</table>
+<p>For detailed value retrieval, you can refer to the <code>getV</code> function of <code>SDFRecordWrapper</code>.</p>
+<blockquote>
+<p>[!TIP|label:Filter Order]</p>
+<p>It is worth noting that in the actual code execution, the SV Level filtering will be carried out first, and then the Genotype Level filtering.</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="gui.html" class="navigation navigation-prev " aria-label="Previous page: SDF GUI">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="extract.html" class="navigation navigation-next " aria-label="Next page: Sample Extraction">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Filter Mode","level":"2.2.2","depth":2,"next":{"title":"Sample Extraction","level":"2.2.3","depth":2,"path":"usage/sdf_toolkit/extract.md","ref":"usage/sdf_toolkit/extract.md","articles":[]},"previous":{"title":"SDF GUI","level":"2.2.1","depth":2,"path":"usage/sdf_toolkit/gui.md","ref":"usage/sdf_toolkit/gui.md","articles":[]},"dir":"ltr"},"config":{"plugins":["favicon-absolute","edit-link","-lunr","-search","search-plus","expandable-chapters-small","back-to-top-button","page-toc-button","katex","pagefooter-freedom","hide-element","-highlight","prism","prism-themes","github-buttons","summary-logo","code","todo","flexible-alerts","theme-comscore","language-picker","get-pdf","password-pro"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-one-light.css"],"lang":{"shell":"bash"}},"language-picker":{"grid-columns":2},"todo":{},"code":{"copyButtons":true},"favicon-absolute":{"favicon":"/assets/logo32.ico","appleTouchIconPrecomposed152":"/assets/logo.png","appleTouchIconMore":{},"appleTouchIconPrecomposedMore":{}},"hide-element":{"elements":[".gitbook-link"]},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"summary-logo":{"logo":"assets/department_logo.png","link":"https://pmglab.top","target":"_blank","style":"background:#24572c;max-width:300px"},"pagefooter-freedom":{"hide":true,"modify_label":"文档修订时间: ","modify_format":"YYYY-MM-DD HH:mm:ss","copyright":"Copyright ©彭文杰 all right reserved"},"theme-comscore":{},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]},"expandable-chapters-small":{},"flexible-alerts":{"style":"flat","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"},"comment":{"label":"Comment","icon":"fa fa-comments","className":"info"},"update":{"label":"Update","icon":"fa fa-upload","className":"tip"}},"password-pro":{"tip":"请输入该页面的访问密码:","errorTip":"密码错误, 请重新输入:","reject":"当前页面拒绝访问: 身份验证失败."},"get-pdf":{"prefix":"SDFA_usage","label":"","base":"https://pmglab.top/SDFA/en"},"edit-link":{"label":"","base":"https://github.com/Zhangliubin/honkit-docker/tree/main/multi-lang/"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"search-plus":{}},"theme":"default","author":"overinterested","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"SDFA: Standardized Decompsition Format Analyses for Structural Variations","language":"en","gitbook":"*","description":"SDFA is a high-performance toolset for structural variation storage and analysis"},"file":{"path":"usage/sdf_toolkit/filter.md","mtime":"2025-05-14T06:51:20.358Z","type":"markdown"},"gitbook":{"version":"3.7.3","time":"2025-05-14T09:38:42.239Z"},"basePath":"../..","book":{"language":"en"}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-summary-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-language-picker/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-get-pdf/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/md5.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,7 @@
+.book .book-summary .book-logo {
+  text-align: center;
+}
+
+.book .book-summary .book-logo .book-link {
+  cursor: pointer;
+}

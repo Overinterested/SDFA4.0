@@ -1,0 +1,11 @@
+{
+    "pluginsConfig": {
+        "pagefooter-freedom": {
+            "copyright":"Copyright ©彭文杰 all right reserved",
+            "modify_label": "文档修订时间: ",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "katex":{}
+    }
+}
+

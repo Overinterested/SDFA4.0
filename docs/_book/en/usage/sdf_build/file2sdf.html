@@ -1,0 +1,655 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Build SDF from other files · SDFA: Standardized Decompsition Format Analyses for Structural Variations</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 3.7.3">
+        <meta name="author" content="overinterested">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-page-toc-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-pagefooter-freedom/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism-one-light.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-summary-logo/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-language-picker/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-password-pro/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../sdf_toolkit/gui.html" />
+    
+    
+    <link rel="prev" href="vcf2sdf.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]};
+    </script>
+
+    
+        <link rel="shortcut icon" href="/assets/logo32.ico" type="image/x-icon">
+    
+    
+    
+    
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/logo.png">
+    
+    
+        
+    
+    
+        
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    About SDFA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../download.html">
+            
+                <a href="../../download.html">
+            
+                    
+                    Download and Install
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <a target="_blank" href="https://pmglab.top/SDFA/api/">
+            
+                    
+                    API Document
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Usage Document</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="vcf2sdf.html">
+            
+                <a href="vcf2sdf.html">
+            
+                    
+                    Build SDF Archives
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="vcf2sdf.html">
+            
+                <a href="vcf2sdf.html">
+            
+                    
+                    Build SDF from VCF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.2" data-path="file2sdf.html">
+            
+                <a href="file2sdf.html">
+            
+                    
+                    Build SDF from other files
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../sdf_toolkit/gui.html">
+            
+                <a href="../sdf_toolkit/gui.html">
+            
+                    
+                    SDF Operation Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="../sdf_toolkit/gui.html">
+            
+                <a href="../sdf_toolkit/gui.html">
+            
+                    
+                    SDF GUI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="../sdf_toolkit/filter.html">
+            
+                <a href="../sdf_toolkit/filter.html">
+            
+                    
+                    Filter Mode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="../sdf_toolkit/extract.html">
+            
+                <a href="../sdf_toolkit/extract.html">
+            
+                    
+                    Sample Extraction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.4" data-path="../sdf_toolkit/concat.html">
+            
+                <a href="../sdf_toolkit/concat.html">
+            
+                    
+                    Concatenate Multiple SDF
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    SDFA Toolkit
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../sdfa_toolkit/merge.html">
+            
+                <a href="../sdfa_toolkit/merge.html">
+            
+                    
+                    Sample Merge
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../sdfa_toolkit/annotate.html">
+            
+                <a href="../sdfa_toolkit/annotate.html">
+            
+                    
+                    Functional Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../sdfa_toolkit/ngaa.html">
+            
+                <a href="../sdfa_toolkit/ngaa.html">
+            
+                    
+                    Numeric Gene Feature Annotation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="../sdfa_toolkit/gwas.html">
+            
+                <a href="../sdfa_toolkit/gwas.html">
+            
+                    
+                    SV-based GWAS
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            Published with HonKit
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Build SDF from other files</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div class="search-plus" id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="build-sdf-from-other-file-type">Build SDF From other file type</h1>
+<p>Currently, the main recording and storage format of SV is the VCF file. Therefore, in SDFA, there is no command - line tool to directly build an SDF archive from other file formats. However, based on the extensive compatibility of SV files and the SV analysis tools developed subsequently, SDFA provides an API to build an SDF archive.</p>
+<h2 id="sdfwriter-build-sdf-archives">SDFWriter build SDF Archives</h2>
+<p>The <code>SDFWriter</code> is a class specifically designed to directly build an SDF by constructing <code>SDFWriterRecord</code>. In essence, it is a process of <code>obtaining a record</code>, <code>setting the record</code>, <code>writing the record</code>, <code>resetting the record</code> and <code>ending the record</code>. Therefore, users need to consider how to convert an input file format into an <code>SDFWriterRecord</code> record.</p>
+<p>Now, let&apos;s give an example of the use of <code>SDFWriter</code>:</p>
+<blockquote>
+<p>[!NOTE|label:Example 1]</p>
+<p>The essence of <code>SDFWriterRecord</code> is an SV record. Therefore, we need to construct an SV record and manually write it into a file.</p>
+<pre class="language-"><code class="lang-shell">public static void main<span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> throws IOException, InterruptedException <span class="token punctuation">{</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> names <span class="token operator">=</span> new String<span class="token punctuation">[</span><span class="token number">1000</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i++<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            names<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> String.valueOf<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        SDFWriter writer1 <span class="token operator">=</span> SDFWriter.SDFWriterBuild.of<span class="token punctuation">(</span>new File<span class="token punctuation">(</span><span class="token string">&quot;/Users/wenjiepeng/Desktop/tmp/yg/1.sdf&quot;</span><span class="token punctuation">))</span>
+                .addFormat<span class="token punctuation">(</span><span class="token string">&quot;GT&quot;</span><span class="token punctuation">)</span>
+                .addFormat<span class="token punctuation">(</span><span class="token string">&quot;AD&quot;</span><span class="token punctuation">)</span>
+                .addInfoKeys<span class="token punctuation">(</span><span class="token string">&quot;PRECISE&quot;</span>, <span class="token string">&quot;READS_SUPPORT&quot;</span><span class="token punctuation">)</span>
+                .addIndividuals<span class="token punctuation">(</span>names<span class="token punctuation">)</span>
+                .build<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SDFWriter.SDFWriterRecord item <span class="token operator">=</span> writer1.getTemplateSV<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        item.setInfo<span class="token punctuation">(</span><span class="token string">&quot;PRECISE&quot;</span>, <span class="token string">&quot;true&quot;</span><span class="token punctuation">)</span>
+                .setInfo<span class="token punctuation">(</span><span class="token string">&quot;READS_SUPPORT&quot;</span>, <span class="token string">&quot;3&quot;</span><span class="token punctuation">)</span>
+                .setAlt<span class="token punctuation">(</span>new Bytes<span class="token punctuation">(</span><span class="token string">&quot;ACGAGGGCCCCAA&quot;</span><span class="token punctuation">))</span>
+                .setChrName<span class="token punctuation">(</span><span class="token string">&quot;chr1&quot;</span><span class="token punctuation">)</span>
+                .setType<span class="token punctuation">(</span>SVTypeSign.getByName<span class="token punctuation">(</span><span class="token string">&quot;DEL&quot;</span><span class="token punctuation">))</span>
+                .setID<span class="token punctuation">(</span>new Bytes<span class="token punctuation">(</span><span class="token string">&quot;ID_0&quot;</span><span class="token punctuation">))</span>
+                .setRef<span class="token punctuation">(</span>new Bytes<span class="token punctuation">(</span><span class="token string">&quot;ACGAGGGCCCCAA&quot;</span><span class="token punctuation">))</span>
+                .setPos<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span>
+                .setEnd<span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+                .setLength<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span>
+                .setQuality<span class="token punctuation">(</span>new Bytes<span class="token punctuation">(</span><span class="token string">&quot;.&quot;</span><span class="token punctuation">))</span>
+                .setFilter<span class="token punctuation">(</span>new Bytes<span class="token punctuation">(</span><span class="token string">&quot;PASS&quot;</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i++<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            item.addInitFormatAttrs<span class="token punctuation">(</span>i, <span class="token string">&quot;1/1;3,2&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        writer1.write<span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        writer1.write<span class="token punctuation">(</span>item.setPos<span class="token punctuation">(</span><span class="token number">999</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+        writer1.write<span class="token punctuation">(</span>item.setPos<span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">))</span><span class="token punctuation">;</span>
+        writer1.close<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+</blockquote>
+<p>The above example is to construct an SV and write it. Therefore, for an input file in any format, what the user needs to construct is the process of converting Line → Record.</p>
+<h2 id="api-document">API Document</h2>
+<p>Specifically, users can check the SDF archive built by the <code>SDFWriter</code> class.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="vcf2sdf.html" class="navigation navigation-prev " aria-label="Previous page: Build SDF from VCF">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../sdf_toolkit/gui.html" class="navigation navigation-next " aria-label="Next page: SDF Operation Toolkit">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Build SDF from other files","level":"2.1.2","depth":2,"next":{"title":"SDF Operation Toolkit","level":"2.2","depth":1,"path":"usage/sdf_toolkit/gui.md","ref":"usage/sdf_toolkit/gui.md","articles":[{"title":"SDF GUI","level":"2.2.1","depth":2,"path":"usage/sdf_toolkit/gui.md","ref":"usage/sdf_toolkit/gui.md","articles":[]},{"title":"Filter Mode","level":"2.2.2","depth":2,"path":"usage/sdf_toolkit/filter.md","ref":"usage/sdf_toolkit/filter.md","articles":[]},{"title":"Sample Extraction","level":"2.2.3","depth":2,"path":"usage/sdf_toolkit/extract.md","ref":"usage/sdf_toolkit/extract.md","articles":[]},{"title":"Concatenate Multiple SDF","level":"2.2.4","depth":2,"path":"usage/sdf_toolkit/concat.md","ref":"usage/sdf_toolkit/concat.md","articles":[]}]},"previous":{"title":"Build SDF from VCF","level":"2.1.1","depth":2,"path":"usage/sdf_build/vcf2sdf.md","ref":"usage/sdf_build/vcf2sdf.md","articles":[]},"dir":"ltr"},"config":{"plugins":["favicon-absolute","edit-link","-lunr","-search","search-plus","expandable-chapters-small","back-to-top-button","page-toc-button","katex","pagefooter-freedom","hide-element","-highlight","prism","prism-themes","github-buttons","summary-logo","code","todo","flexible-alerts","theme-comscore","language-picker","get-pdf","password-pro"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-one-light.css"],"lang":{"shell":"bash"}},"language-picker":{"grid-columns":2},"todo":{},"code":{"copyButtons":true},"favicon-absolute":{"favicon":"/assets/logo32.ico","appleTouchIconPrecomposed152":"/assets/logo.png","appleTouchIconMore":{},"appleTouchIconPrecomposedMore":{}},"hide-element":{"elements":[".gitbook-link"]},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"summary-logo":{"logo":"assets/department_logo.png","link":"https://pmglab.top","target":"_blank","style":"background:#24572c;max-width:300px"},"pagefooter-freedom":{"hide":true,"modify_label":"文档修订时间: ","modify_format":"YYYY-MM-DD HH:mm:ss","copyright":"Copyright ©彭文杰 all right reserved"},"theme-comscore":{},"page-toc-button":{},"back-to-top-button":{},"prism-themes":{},"github-buttons":{"buttons":[{"user":"Wenjie Peng","repo":"honkit-docker","type":"star","size":"small"}]},"expandable-chapters-small":{},"flexible-alerts":{"style":"flat","note":{"label":"Note","icon":"fa fa-info-circle","className":"info"},"tip":{"label":"Tip","icon":"fa fa-lightbulb-o","className":"tip"},"warning":{"label":"Warning","icon":"fa fa-exclamation-triangle","className":"warning"},"danger":{"label":"Attention","icon":"fa fa-ban","className":"danger"},"comment":{"label":"Comment","icon":"fa fa-comments","className":"info"},"update":{"label":"Update","icon":"fa fa-upload","className":"tip"}},"password-pro":{"tip":"请输入该页面的访问密码:","errorTip":"密码错误, 请重新输入:","reject":"当前页面拒绝访问: 身份验证失败."},"get-pdf":{"prefix":"SDFA_usage","label":"","base":"https://pmglab.top/SDFA/en"},"edit-link":{"label":"","base":"https://github.com/Zhangliubin/honkit-docker/tree/main/multi-lang/"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"search-plus":{}},"theme":"default","author":"overinterested","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"SDFA: Standardized Decompsition Format Analyses for Structural Variations","language":"en","gitbook":"*","description":"SDFA is a high-performance toolset for structural variation storage and analysis"},"file":{"path":"usage/sdf_build/file2sdf.md","mtime":"2025-05-14T06:50:39.320Z","type":"markdown"},"gitbook":{"version":"3.7.3","time":"2025-05-14T09:38:42.239Z"},"basePath":"../..","book":{"language":"en"}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-page-toc-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-summary-logo/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-language-picker/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-get-pdf/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-password-pro/md5.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+
