@@ -86,8 +86,7 @@ public class SDSVConversionManager {
         // gty
         IGenotypes genotypes = svGenotypes == null || svGenotypes.getGtyBox() == null ? GenotypeConstant.EMPTY_ENUMERATED_GENOTYPES : svGenotypes.getGtyBox().get();
         List<Bytes> gtyMetricValues = svGenotypes.getEncodedAttrs();
-        Bytes gtyEncode = null;
-        gtyEncode = genotypeEncode.encode(genotypes);
+        Bytes gtyEncode = genotypeEncode.encode(genotypes);
         // start end length check
         for (int i = 0; i < numOfSV; i++) {
             SVCoordinate coordinate = coordinateList.fastGet(i);
@@ -108,7 +107,6 @@ public class SDSVConversionManager {
             record = record.clone();
             records.add(record);
             svGenotypes.clear();
-
             record.set(0, IntList.wrap(coordinateList.fastGet(i).encode()))
                     .set(1, length)
                     .set(2, typeIndex)

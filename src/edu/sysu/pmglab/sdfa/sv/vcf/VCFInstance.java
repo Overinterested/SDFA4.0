@@ -122,7 +122,9 @@ public class VCFInstance {
                 Bytes value = splitter.next();
                 if (indexOfColInLine == 1) {
                     // pos
-                    initCoordinate.setIndexOfChr(contig.getContigIndexByName(splitter.fastGetInVCF(0).toString()))
+                    int contigIndex = contig.getContigIndexByName(splitter.fastGetInVCF(0).toString());
+                    infoManager.initContigIndex(contigIndex);
+                    initCoordinate.setIndexOfChr(contigIndex)
                             .setPos(value.toInt());
                     indexOfColInLine++;
                     continue;

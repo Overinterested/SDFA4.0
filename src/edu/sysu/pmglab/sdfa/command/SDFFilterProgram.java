@@ -57,6 +57,7 @@ public class SDFFilterProgram extends ICommandProgram {
         CommandOptions options = sdfFilterProgram.parse(args.length == 1 && args[0].equals("filter") ? new String[]{"--help"} : args);
         if (options.isHelp()){
             logger.info("\n{}", options.usage());
+            return;
         }else {
             logger.info("\n{}",options);
         }

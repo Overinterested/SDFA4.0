@@ -207,5 +207,9 @@ public class GenomeSourceOutput implements SourceOutput {
     public Bytes getHeader() {
         return header;
     }
+
+    public LiveFile getFile() {
+        return file;
+    }
 }
 

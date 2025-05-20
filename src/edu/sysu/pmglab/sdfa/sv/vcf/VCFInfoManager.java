@@ -10,6 +10,7 @@ import edu.sysu.pmglab.container.indexable.DynamicIndexableMap;
 import edu.sysu.pmglab.container.list.IntList;
 import edu.sysu.pmglab.container.list.List;
 import edu.sysu.pmglab.easytools.Constant;
+import edu.sysu.pmglab.sdfa.sv.SVContig;
 import edu.sysu.pmglab.sdfa.sv.SVTypeSign;
 
 /**
@@ -24,6 +25,7 @@ public class VCFInfoManager {
     int indexOfContig2 = -1;
     private SVTypeSign typeSign;
     private boolean initType = false;
+    private int lineContigIndex;
     private BytesSplitter equalSplit = new BytesSplitter(Constant.EQUAL);
     private BytesSplitter semicolonSplit = new BytesSplitter(Constant.SEMICOLON);
     private final IntList dropFieldIndex = new IntList();
@@ -312,7 +314,7 @@ public class VCFInfoManager {
     private String[] getSavedInfoKeys(){
         int size = indexedInfoFields.size();
         String[] savedInfoKeys = new String[size];
-        boolean drop = !(dropFieldIndex == null||dropFieldIndex.isEmpty());
+        boolean drop = !dropFieldIndex.isEmpty();
         int currIndexOfDropList = 0, savedIndex = 0;
         for (int i = 0; i < size; i++) {
             if (drop && currIndexOfDropList<dropFieldIndex.size()&&dropFieldIndex.fastGet(currIndexOfDropList) == i){
@@ -323,5 +325,13 @@ public class VCFInfoManager {
             savedIndex++;
         }
         return savedInfoKeys;
+    }
+
+    public void initContigIndex(int contigIndex) {
+        this.lineContigIndex = contigIndex;
+    }
+
+    public int getIndexContigIndex() {
+        return lineContigIndex;
     }
 }

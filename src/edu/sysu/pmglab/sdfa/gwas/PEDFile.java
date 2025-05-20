@@ -17,6 +17,7 @@ import edu.sysu.pmglab.sdfa.SDFReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -33,7 +34,7 @@ import java.util.Iterator;
 public class PEDFile {
     boolean dichotomousPhenotype = false;
     NamedSet<PEDItem> items = new NamedSet<>();
-    private BytesSplitter splitter = new BytesSplitter(Constant.TAB);
+    private final BytesSplitter splitter = new BytesSplitter(Constant.TAB);
 
     private PEDFile() {
 
@@ -63,6 +64,15 @@ public class PEDFile {
         }
         instance.dichotomousPhenotype = dichotomousPhenotype;
         return instance;
+    }
+
+    public HashSet<String> getAllUidSet() {
+        int size = items.size();
+        HashSet<String> uidSet = new HashSet<>();
+        for (int i = 0; i < size; i++) {
+            uidSet.add(getUIDByIndex(i).toString());
+        }
+        return uidSet;
     }
 
     public static class PEDItem {
@@ -263,4 +273,6 @@ public class PEDFile {
         }
         writerStream.close();
     }
+
+
 }

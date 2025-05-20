@@ -17,8 +17,4 @@ public class StandardVCFParser extends AbstractCallingParser {
     public boolean parseInfo(VCFInfoManager infoManager, List<SVCoordinate> coordinateList, SVContig contig) {
         return super.parseInfo(infoManager, coordinateList, contig);
     }
-
-    public void replace(){
-
-    }
 }

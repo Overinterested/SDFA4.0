@@ -18,6 +18,8 @@ import edu.sysu.pmglab.executor.ITask;
 import edu.sysu.pmglab.executor.Workflow;
 import edu.sysu.pmglab.io.FileUtils;
 import edu.sysu.pmglab.progressbar.ProgressBar;
+import edu.sysu.pmglab.sdfa.annotation.source.GenomeSource;
+import edu.sysu.pmglab.sdfa.annotation.source.SourceManager;
 import edu.sysu.pmglab.sdfa.mode.SDFReadType;
 import edu.sysu.pmglab.sdfa.nagf.annotate.IndexedGeneAnnotation;
 import edu.sysu.pmglab.sdfa.nagf.numeric.output.AbstractOutputNumericFeature;
@@ -58,8 +60,8 @@ public class NAGFProgram extends ICommandProgram {
     boolean geneLevel = true;
     @Option(names = "--rna-level", type = FieldType.NULL)
     boolean rnaLevel;
-    @Option(names = "--rna-batch", type = FieldType.varInt32, validator = Int_0_RangeValidator.class, defaultTo = "500")
-    int numOfLoadRefRNA;
+    @Option(names = "--rna-batch", type = FieldType.int32)
+    int numOfLoadRefRNA = 500;
     @Option(names = {"-t", "--threads"}, type = FieldType.varInt32, validator = Int_1_RangeValidator.class)
     int threads = 4;
     @Option(names = {"-dir", "-d"}, type = FieldType.file, required = true)
@@ -83,7 +85,7 @@ public class NAGFProgram extends ICommandProgram {
         File inputDir = nagfProgram.inputDir;
         File outputDir = nagfProgram.outputDir;
         File genomeFile = nagfProgram.genomeFile;
-        int numOfLoadRefRNA = nagfProgram.numOfLoadRefRNA;
+        int numOfLoadRefRNA = options.value("--rna-batch");
         NAGFMode mode = options.passed("--sv-mode") ? NAGFMode.SV_Level :
                 options.passed("--population-vcf") ? NAGFMode.One_Population_VCF : NAGFMode.Multi_VCF;
         boolean populationVCFMode = options.passed("--population-vcf");
@@ -116,6 +118,7 @@ public class NAGFProgram extends ICommandProgram {
                 SDFReadType.ANNOTATION_GT
         );
         // load reference and map
+        genomeFile = new File((((GenomeSource) SourceManager.getManager().getSourceByIndex(0))).getFile().toString());
         RefGenomicElementManager refGenomicElementManager = RefGenomicElementManager.init(
                 genomeFile, outputDir, geneLevel,
                 populationVCFMode ? NAGFMode.One_Population_VCF : NAGFMode.Multi_VCF

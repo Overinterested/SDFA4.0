@@ -62,7 +62,7 @@ public class AnnotationProgram extends ICommandProgram {
 
     static boolean output = true;
 
-    private static HashMap<String, BiFunction<ISDSV, IRecord, Boolean>> furthAnnotateFunctionList = new HashMap<>();
+    private static final HashMap<String, BiFunction<ISDSV, IRecord, Boolean>> furthAnnotateFunctionList = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         Logger logger = LogBackOptions.getRootLogger();

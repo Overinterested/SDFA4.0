@@ -41,6 +41,7 @@ public class SDFConcatProgram extends ICommandProgram {
         CommandOptions options = sdfConcatProgram.parse(args.length == 1 && args[0].equals("concat") ? new String[]{"--help"} : args);
         if (options.isHelp()) {
             logger.info("\n{}", options.usage());
+            return;
         } else {
             logger.info("\n{}", options);
         }

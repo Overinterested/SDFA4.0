@@ -84,6 +84,7 @@ public class SVBasedGWASProgram extends ICommandProgram {
         CommandOptions options = program.parse(args.length == 1 && args[0].equals("gwas") ? new String[]{"--help"} : args);
         if (options.isHelp()){
             logger.info("\n{}", options.usage());
+            return;
         }else {
             logger.info("\n{}",options);
         }

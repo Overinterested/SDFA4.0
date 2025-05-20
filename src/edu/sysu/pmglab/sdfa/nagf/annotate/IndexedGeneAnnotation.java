@@ -33,10 +33,15 @@ public class IndexedGeneAnnotation {
     public void annotate() throws IOException {
         prepare(genomeFile);
         AnnotationProgram.output(false);
-        AnnotationProgram.main(wrapToAnnotationCommandLines());
-        respondingConfigFile.delete();
-        AnnotationProgram.output(true);
-        if (mode == NAGFMode.SV_Level){
+        try {
+            AnnotationProgram.main(wrapToAnnotationCommandLines());
+        } finally {
+            if (respondingConfigFile.exists()) {
+                respondingConfigFile.delete();
+            }
+        }
+        if (mode == NAGFMode.SV_Level) {
+            AnnotationProgram.output(true);
             SourceOutputManager sourceOutputManager = SourceOutputManager.getInstance();
             sourceOutputManager.switchToNAGF();
             LogBackOptions.getRootLogger().info("Start output annotation results.");
@@ -94,8 +99,8 @@ public class IndexedGeneAnnotation {
         try {
             WriterStream writerStream = new WriterStream(tmpConfigFile, WriterStream.Option.DEFAULT);
             writerStream.write(ASCIIUtility.toASCII("[[annotation]]\n", Constant.CHAR_SET));
-            writerStream.write(ASCIIUtility.toASCII("file=" + genomeFile + "\n",Constant.CHAR_SET));
-            writerStream.write(ASCIIUtility.toASCII("type=genome\n",Constant.CHAR_SET));
+            writerStream.write(ASCIIUtility.toASCII("file=" + genomeFile + "\n", Constant.CHAR_SET));
+            writerStream.write(ASCIIUtility.toASCII("type=gene\n", Constant.CHAR_SET));
             writerStream.flush();
             writerStream.close();
         } catch (IOException e) {

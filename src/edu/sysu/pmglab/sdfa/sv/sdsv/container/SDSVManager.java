@@ -1,6 +1,7 @@
 package edu.sysu.pmglab.sdfa.sv.sdsv.container;
 
 import edu.sysu.pmglab.LogBackOptions;
+import edu.sysu.pmglab.bytecode.Bytes;
 import edu.sysu.pmglab.commandParser.ICommandProgram;
 import edu.sysu.pmglab.container.indexable.LinkedSet;
 import edu.sysu.pmglab.container.interval.IntInterval;
@@ -20,6 +21,7 @@ import edu.sysu.pmglab.sdfa.sv.vcf.VCFInstance;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 
 /**
  * @author Wenjie Peng
