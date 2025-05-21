@@ -31,7 +31,7 @@ import java.io.IOException;
                 counter = {
                         @Counter(item = {
                                 "annotate", "merge", "nagf", "vcf2sdf", "integrate", "gui",
-                                "concat", "filter", "extract"
+                                "concat", "filter", "extract", "select"
                         }, rule = Counter.Type.EQUAL, count = 1)
                 }
         )
@@ -67,6 +67,9 @@ public class SDFAProgram extends ICommandProgram {
     @EntryOption({"extract"})
     String[] extract;
 
+    @EntryOption({"select"})
+    String[] select;
+
     public static void main(String[] args) throws IOException {
         SDFAProgram program = new SDFAProgram();
         CommandOptions options = program.parse(args);
@@ -96,6 +99,8 @@ public class SDFAProgram extends ICommandProgram {
             SDFFilterProgram.main(options.value("filter"));
         } else if(options.passed("extract")){
             SDFExtractProgram.main(options.value("extract"));
+        } else if (options.passed("select")){
+            PedBasedSDFSelectionProgram.main(options.value("select"));
         }
     }
 }

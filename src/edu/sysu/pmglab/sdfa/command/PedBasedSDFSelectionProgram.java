@@ -10,6 +10,7 @@ import edu.sysu.pmglab.commandParser.annotation.usage.Parser;
 import edu.sysu.pmglab.commandParser.annotation.usage.UsageItem;
 import edu.sysu.pmglab.container.indexable.LinkedSet;
 import edu.sysu.pmglab.container.list.List;
+import edu.sysu.pmglab.executor.Pipeline;
 import edu.sysu.pmglab.executor.Workflow;
 import edu.sysu.pmglab.io.FileUtils;
 import edu.sysu.pmglab.progressbar.ProgressBar;
@@ -40,12 +41,12 @@ public class PedBasedSDFSelectionProgram extends ICommandProgram {
     String pedFile;
     @Option(names = {"-d", "--sdf-dir"}, type = FieldType.file, required = true)
     File sdfDir;
-    @Option(names = {"-d", "--sdf-dir"}, type = FieldType.file, required = true)
+    @Option(names = {"-o", "--output-dir"}, type = FieldType.string, required = true)
     String outputDir;
-    @Option(names = {"--thread", "-t"}, type = FieldType.file, required = true, defaultTo = "4")
-    int thread;
-    @Option(names = {"--count"}, type = FieldType.bool)
-    boolean countMode = false;
+    @Option(names = {"--thread", "-t"}, type = FieldType.varInt32)
+    int thread = 4;
+    @Option(names = {"--count"}, type = FieldType.NULL)
+    Object countMode = false;
 
     public static void main(String[] args) throws IOException {
         Logger logger = LogBackOptions.getRootLogger();
@@ -64,22 +65,23 @@ public class PedBasedSDFSelectionProgram extends ICommandProgram {
         }
         PEDFile pedInstance = PEDFile.load(options.value("-f"));
         HashSet<String> allUidSet = pedInstance.getAllUidSet();
-        if (!allUidSet.isEmpty()) {
+        if (allUidSet.isEmpty()) {
             logger.warn("There is no sample in the input PED file.");
             return;
         }
         String outputDir = options.value("-o");
         Workflow workflow = new Workflow(options.value("-t"));
         workflow.addTask((status, context) -> {
-            context.put("select_bar", new ProgressBar.Builder()
-                    .setTextRenderer("File Copy Speed", "Chromosomes")
+            ProgressBar build = new ProgressBar.Builder()
+                    .setTextRenderer("File Copy Speed", "Files")
                     .setInitialMax(Integer.MIN_VALUE)
-                    .build());
+                    .build();
+            context.put("select_bar", build);
         });
         AtomicInteger pedFileCount = new AtomicInteger(0);
         for (int i = 0; i < sdfFileList.size(); i++) {
             int finalI = i;
-            workflow.addTask((status, context) -> {
+            workflow.addTask(new Pipeline((status, context) -> {
                 File file = sdfFileList.fastGet(finalI);
                 SDFReader reader = new SDFReader(file);
                 LinkedSet<String> individuals = reader.getIndividuals();
@@ -91,11 +93,12 @@ public class PedBasedSDFSelectionProgram extends ICommandProgram {
                     ((ProgressBar) context.get("select_bar")).step(1);
                 }
                 reader.closeAll();
-            });
+                reader = null;
+            }));
         }
-        workflow.addTask((status, context) -> {
+        workflow.addTask(new Pipeline((status, context) -> {
             ((ProgressBar) context.get("select_bar")).close();
-        });
+        }));
         workflow.execute();
         if (options.passed("--count")) {
             logger.info("Detect " + pedFileCount.get() + " individuals from the ped file in this input directory.");
