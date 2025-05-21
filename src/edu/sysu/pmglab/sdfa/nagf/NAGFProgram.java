@@ -118,7 +118,7 @@ public class NAGFProgram extends ICommandProgram {
                 SDFReadType.ANNOTATION_GT
         );
         // load reference and map
-        genomeFile = new File((((GenomeSource) SourceManager.getManager().getSourceByIndex(0))).getFile().toString());
+        genomeFile = new File(SourceManager.getManager().getSourceByIndex(0).getFile().toString());
         RefGenomicElementManager refGenomicElementManager = RefGenomicElementManager.init(
                 genomeFile, outputDir, geneLevel,
                 populationVCFMode ? NAGFMode.One_Population_VCF : NAGFMode.Multi_VCF

@@ -17,7 +17,6 @@ public class GuiTest {
                 (
                         "gui -f " +
                                 "/Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf2sdf/simple_with_no_type/sdf/HG01258_HiFi_aligned_GRCh38_winnowmap.sniffles.vcf.sdf"
-                )
-                        .split(" "));
+                ).split(" "));
     }
 }
