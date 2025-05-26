@@ -1,7 +1,9 @@
 package edu.sysu.pmglab.test;
 
+import edu.sysu.pmglab.ccf.CCFTable;
 import edu.sysu.pmglab.sdfa.command.SDFAProgram;
 import edu.sysu.pmglab.test.process.Finish;
+import org.rosuda.REngine.REngineException;
 
 import java.io.IOException;
 
@@ -12,7 +14,8 @@ import java.io.IOException;
  */
 @Finish
 public class AnnotationTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
+        CCFTable.gc();
         String annotationCML = "annotate --config /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/data/config.txt " +
                 "-t 4 -d /Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf " +
                 "-o /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/res";

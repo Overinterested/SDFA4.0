@@ -10,6 +10,7 @@ import edu.sysu.pmglab.sdfa.annotation.output.SourceOutputManager;
 import edu.sysu.pmglab.sdfa.command.AnnotationProgram;
 import edu.sysu.pmglab.sdfa.mode.SDFReadType;
 import edu.sysu.pmglab.sdfa.nagf.NAGFMode;
+import sun.rmi.runtime.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,10 @@ public class IndexedGeneAnnotation {
             AnnotationProgram.main(wrapToAnnotationCommandLines());
         } finally {
             if (respondingConfigFile.exists()) {
-                respondingConfigFile.delete();
+                boolean delete = respondingConfigFile.delete();
+                if (!delete){
+                    LogBackOptions.getRootLogger().warn("The temporary annotation configuration file cannot be deleted.");
+                }
             }
         }
         if (mode == NAGFMode.SV_Level) {

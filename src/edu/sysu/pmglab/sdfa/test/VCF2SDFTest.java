@@ -1,6 +1,7 @@
 package edu.sysu.pmglab.sdfa.test;
 
 import edu.sysu.pmglab.sdfa.command.SDFAProgram;
+import org.rosuda.REngine.REngineException;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
  */
 @FinishTest
 public class VCF2SDFTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         String multiParserCommand = "vcf2sdf -dir " +
                 "/Users/wenjiepeng/Desktop/SDFA3.0/test/vcf2sdf/UKBB " +
                 "--filter-gty-null --filter-size 20,1000000 " +

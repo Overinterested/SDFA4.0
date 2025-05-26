@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @description
  */
 public class RConnectionPool {
-    static volatile BlockingQueue<RConnection> pool = new LinkedBlockingQueue<>(10);
+    static volatile BlockingQueue<RConnection> pool = new LinkedBlockingQueue<>(50);
 
     private RConnectionPool(){
 

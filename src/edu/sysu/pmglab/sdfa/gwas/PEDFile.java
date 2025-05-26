@@ -53,7 +53,8 @@ public class PEDFile {
                 continue;
             }
             PEDItem pedItem = new PEDItem(line, instance);
-            if (!pedItem.phenotype.equals(Constant.ONE) && !pedItem.phenotype.equals(Constant.TWO)) {
+            if (!pedItem.phenotype.equals(Bytes.byteToBytes(Constant.ONE))
+                    && !pedItem.phenotype.equals(Bytes.byteToBytes(Constant.TWO))) {
                 dichotomousPhenotype = false;
             }
             if (instance.items.contains(pedItem.iid.toString())){
@@ -68,7 +69,7 @@ public class PEDFile {
 
     public HashSet<String> getAllUidSet() {
         int size = items.size();
-        HashSet<String> uidSet = new HashSet<>();
+        HashSet<String> uidSet = new HashSet<>(size);
         for (int i = 0; i < size; i++) {
             uidSet.add(getUIDByIndex(i).toString());
         }
@@ -91,6 +92,11 @@ public class PEDFile {
 
         public Bytes getPhenotype() {
             return phenotype;
+        }
+
+        public PEDItem setIid(Bytes iid) {
+            this.iid = iid;
+            return this;
         }
 
         private PEDItem(Bytes pedLine, PEDFile instance) {
@@ -132,7 +138,7 @@ public class PEDFile {
             cache.write(Constant.TAB);
             cache.write(mid);
             cache.write(Constant.TAB);
-            cache.putByte(sex);
+            cache.write(ASCIIUtility.toASCII(sex));
             cache.write(Constant.TAB);
             cache.write(phenotype);
             cache.write(Constant.NEWLINE);
@@ -214,11 +220,15 @@ public class PEDFile {
             PEDFile load = PEDFile.load(pedFile);
             NamedSet<PEDItem> items = load.items;
             WriterStream writerStream = new WriterStream(new File(outputFile), WriterStream.Option.DEFAULT);
+            ByteStream writeCache = new ByteStream();
             for (int i = 0; i < iids.size(); i++) {
                 Bytes tmpIID = iids.fastGet(i);
                 for (PEDItem item : items) {
                     if (tmpIID.toString().contains(item.iid.toString())){
-                        writerStream.write(ASCIIUtility.toASCII(item.toString(),Constant.CHAR_SET));
+                        item.setIid(tmpIID);
+                        item.writeTo(writeCache);
+                        writerStream.write(writeCache.toBytes());
+                        writeCache.clear();
                         break;
                     }
                 }

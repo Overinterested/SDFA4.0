@@ -2,6 +2,7 @@ package edu.sysu.pmglab.sdfa.command;
 
 import ch.qos.logback.classic.Logger;
 import edu.sysu.pmglab.LogBackOptions;
+import edu.sysu.pmglab.ccf.CCFTable;
 import edu.sysu.pmglab.ccf.record.IRecord;
 import edu.sysu.pmglab.ccf.type.FieldType;
 import edu.sysu.pmglab.commandParser.CommandOptions;
@@ -71,6 +72,7 @@ public class AnnotationProgram extends ICommandProgram {
         CommandOptions options = program.parse(args.length == 1 && args[0].equals("annotate") ? new String[]{"--help"} : args);
         if (options.isHelp()) {
             logger.info("\n{}", options.usage());
+            return;
         } else {
             logger.info("\n{}", options);
         }
@@ -82,7 +84,9 @@ public class AnnotationProgram extends ICommandProgram {
 
         // load and parse raw files to sdf files
         Workflow workflow = new Workflow(threads);
-        SDSVManager sdsvManager = Objects.requireNonNull(SDSVManager.of(inputDir)).setOutputDir(outputDir).setReadOption(SDFReadType.ANNOTATION);
+        SDSVManager sdsvManager = Objects.requireNonNull(SDSVManager.of(inputDir)).setOutputDir(outputDir)
+                .setReadOption(SDFReadType.ANNOTATION)
+                .initAnnotationOutputDir();
         List<Pipeline> pipelines = sdsvManager.parseToSDFFileTask();
         for (Pipeline pipeline : pipelines) {
             workflow.addTask(pipeline);
@@ -149,13 +153,15 @@ public class AnnotationProgram extends ICommandProgram {
             loadTasks.clear();
             // annotate
             List<ITask> annotateTasks = sourceManager.annotateTask(startFileIndex, endFileIndex);
-            tasks = annotateTasks.toArray(new ITask[0]);
-            for (ITask task : tasks) {
-                workflow.addTask(task);
+            if (annotateTasks != null) {
+                tasks = annotateTasks.toArray(new ITask[0]);
+                for (ITask task : tasks) {
+                    workflow.addTask(task);
+                }
+                workflow.execute();
+                workflow.clearTasks();
+                annotateTasks.clear();
             }
-            workflow.execute();
-            workflow.clearTasks();
-            annotateTasks.clear();
             // write
             List<ITask> writeTasks = sdsvManager.writeTask(startFileIndex, endFileIndex);
             tasks = writeTasks.toArray(new ITask[0]);
@@ -185,6 +191,7 @@ public class AnnotationProgram extends ICommandProgram {
             // sliding windows
             SourceOutputManager.getInstance().partialOutput();
         }
+        CCFTable.gc();
     }
 
     public static void output(boolean output) {

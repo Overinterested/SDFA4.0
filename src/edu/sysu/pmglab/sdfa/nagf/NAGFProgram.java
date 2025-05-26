@@ -50,6 +50,8 @@ import java.io.IOException;
         )
 )
 public class NAGFProgram extends ICommandProgram {
+    @Option(names = "nagf", type = FieldType.NULL)
+    Object nagf;
     @Option(names = "--population-vcf", type = FieldType.NULL)
     boolean populationVCFMode = false;
     @Option(names = "--multiple-vcf", type = FieldType.NULL)
@@ -74,12 +76,20 @@ public class NAGFProgram extends ICommandProgram {
     String model;
     @Option(names = "--case-tag", type = FieldType.string)
     String caseTag;
+    @Option(names = {"--output-model", "-om"}, type = FieldType.string, defaultTo = "full")
+    String outputModel = "full";
 
     public static void main(String[] args) throws IOException {
         //region init
         NAGFProgram nagfProgram = new NAGFProgram();
         Logger logger = LogBackOptions.getRootLogger();
-        CommandOptions options = nagfProgram.parse(args);
+        CommandOptions options = nagfProgram.parse(args.length == 1 && args[0].equals("nagf") ? new String[]{"--help"} : args);
+        if (options.isHelp()) {
+            logger.info("\n{}", options.usage());
+            return;
+        } else {
+            logger.info("\n{}", options);
+        }
         // init
         int threads = nagfProgram.threads;
         File inputDir = nagfProgram.inputDir;
@@ -108,11 +118,10 @@ public class NAGFProgram extends ICommandProgram {
         //endregion
 
         //region define your own numeric feature
-        String name = "full";
+        String name = options.value("-om");
         AbstractOutputNumericFeature.setAffectedNumericConvertorName(name);
         AffectedNumericConvertor.add(name, new AffectedStringConvertor());
         //endregion
-
         AnnotatedSDFManager sdsvGenomicIndexManager = AnnotatedSDFManager.init(
                 FileUtils.getSubFile(outputDir, "annotation"),
                 SDFReadType.ANNOTATION_GT

@@ -1,6 +1,7 @@
 package edu.sysu.pmglab.sdfa.nagf;
 
 import edu.sysu.pmglab.LogBackOptions;
+import edu.sysu.pmglab.ccf.CCFTable;
 import edu.sysu.pmglab.container.list.IntList;
 import edu.sysu.pmglab.container.list.List;
 import edu.sysu.pmglab.executor.ITask;
@@ -46,6 +47,7 @@ public class AnnotatedSDFManager {
                 SDFReader sdfReader = new SDFReader(file, readerMode);
                 sdsvGenomicIndexedAnnotations.add(new SDSVGenomicIndexedAnnotation(index++, sdfReader));
                 sdfReader.close();
+                CCFTable.gc();
             }
         }
         annotatedSDFManager.fileIndexedAnnotation = sdsvGenomicIndexedAnnotations;
@@ -127,7 +129,7 @@ public class AnnotatedSDFManager {
         }
 
         /**
-         * update reference RNA related SDSV indexes
+         * update reference RNA with related SDSV indexes
          *
          * @param annotationIndexes sdsv related SV
          * @param index             corresponding sdsv index in the cache list
@@ -141,16 +143,16 @@ public class AnnotatedSDFManager {
             if (annotationIndexes.isEmpty()) {
                 return -1;
             }
-            int startRefIndex = annotationIndexes.fastGet(0);
+            int relatedStartRefIndexInSV = annotationIndexes.fastGet(0);
             // no overlap
-            if (startRefIndex >= maxRefIndex) {
+            if (relatedStartRefIndexInSV >= maxRefIndex) {
                 return 0;
             }
-            // update
-            int endRefIndex = annotationIndexes.fastGet(1);
+            // update sdsv index in ref element list
+            int relatedEndRefIndexInSV = annotationIndexes.fastGet(1);
             RefGenomicElementManager.getInstance().updateRelatedSDSVInRefRNA(
-                    Math.max(minRefIndex, startRefIndex) - minRefIndex,
-                    Math.min(maxRefIndex - 1, endRefIndex) - minRefIndex,
+                    Math.max(minRefIndex, relatedStartRefIndexInSV) - minRefIndex,
+                    Math.min(maxRefIndex - 1, relatedEndRefIndexInSV) - minRefIndex,
                     fileID, index
             );
             return 1;

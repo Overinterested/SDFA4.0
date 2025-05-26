@@ -12,6 +12,7 @@ import edu.sysu.pmglab.commandParser.annotation.usage.UsageItem;
 import edu.sysu.pmglab.sdfa.SDFFilter;
 import edu.sysu.pmglab.sdfa.nagf.NAGFProgram;
 import edu.sysu.pmglab.sdfa.toolkit.SDFConcat;
+import org.rosuda.REngine.REngineException;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -31,7 +32,8 @@ import java.io.IOException;
                 counter = {
                         @Counter(item = {
                                 "annotate", "merge", "nagf", "vcf2sdf", "integrate", "gui",
-                                "concat", "filter", "extract", "select"
+                                "concat", "filter", "extract", "select", "extract_samples",
+                                "sample_file_map", "pstr"
                         }, rule = Counter.Type.EQUAL, count = 1)
                 }
         )
@@ -70,10 +72,19 @@ public class SDFAProgram extends ICommandProgram {
     @EntryOption({"select"})
     String[] select;
 
-    public static void main(String[] args) throws IOException {
+    @EntryOption({"extract_samples"})
+    String[] extract_samples;
+
+    @EntryOption({"sample_file_map"})
+    String[] sample_file_map;
+
+    @EntryOption({"pstr"})
+    String[] pstr;
+
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         SDFAProgram program = new SDFAProgram();
         CommandOptions options = program.parse(args);
-
+        System.setProperty("ccf.buffer.size", "1");
         LogBackOptions.init();
         Logger logger = LogBackOptions.getRootLogger();
 
@@ -95,12 +106,22 @@ public class SDFAProgram extends ICommandProgram {
             GUIProgram.main(options.value("gui"));
         } else if (options.passed("concat")) {
             SDFConcatProgram.main(options.value("concat"));
-        } else if (options.passed("filter")){
+        } else if (options.passed("filter")) {
             SDFFilterProgram.main(options.value("filter"));
-        } else if(options.passed("extract")){
+        } else if (options.passed("extract")) {
             SDFExtractProgram.main(options.value("extract"));
-        } else if (options.passed("select")){
+        } else if (options.passed("select")) {
             PedBasedSDFSelectionProgram.main(options.value("select"));
+        } else if (options.passed("extract_samples")) {
+            ExtractSampleProgram.main(options.value("extract_samples"));
+        } else if (options.passed("sample_file_map")) {
+            SDFSampleNameFileNameMapProgram.main(options.value("sample_file_map"));
+        } else if (options.passed("pstr")) {
+            try {
+                PanAnnotationProgram.main(options.value("pstr"));
+            } catch (Error|Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

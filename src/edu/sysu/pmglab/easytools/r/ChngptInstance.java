@@ -57,7 +57,7 @@ public class ChngptInstance {
                 conn.eval("fit_3 <- glm(y ~ x, family = binomial(link = 'logit'), data = data)");
                 try {
                     result.pValue = conn.eval("summary(fit_3)$coefficients[2, 4]").asDouble();
-                } catch (REXPMismatchException e3) {
+                } catch (REXPMismatchException|RserveException e3) {
                     result.pValue = 1;
                 }
                 result.method = "logistic regression";
@@ -98,7 +98,7 @@ public class ChngptInstance {
                 conn.eval("fit_3 <- glm(y ~ x, family = binomial(link = 'logit'), data = data)");
                 try {
                     result.pValue = conn.eval("summary(fit_3)$coefficients[2, 4]").asDouble();
-                } catch (REXPMismatchException e3) {
+                } catch (REXPMismatchException|RserveException e3) {
                     result.pValue = 1;
                 }
                 result.method = "logistic regression";

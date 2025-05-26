@@ -2,6 +2,7 @@ package edu.sysu.pmglab.test;
 
 import edu.sysu.pmglab.sdfa.command.SDFAProgram;
 import edu.sysu.pmglab.test.process.Finish;
+import org.rosuda.REngine.REngineException;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
  */
 @Finish
 public class GuiTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         SDFAProgram.main(
                 (
                         "gui -f " +

@@ -18,6 +18,9 @@ import java.util.Set;
  */
 public interface AnnotateTask {
     default List<ITask> annotate(SingleFileSDSVManager fileSDSVManager) {
+        if (fileSDSVManager.isAnnotated()){
+            return null;
+        }
         SVContig contig = fileSDSVManager.getReader().getReaderOption().getSDFTable().getContig();
         Set<String> contigs = contig.support();
         Iterator<String> iterator = contigs.iterator();

@@ -3,6 +3,7 @@ package edu.sysu.pmglab.test;
 import edu.sysu.pmglab.sdfa.command.SDFAProgram;
 import edu.sysu.pmglab.sdfa.gwas.PEDFile;
 import edu.sysu.pmglab.test.process.Finish;
+import org.rosuda.REngine.REngineException;
 
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
  */
 @Finish
 public class SDFExtractTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         String extractCML = "extract";
 //                "-d /Users/wenjiepeng/Desktop/SDFA_4.0/test/extract/data/sdf " +
 //                "-o /Users/wenjiepeng/Desktop/SDFA_4.0/test/extract/data " +

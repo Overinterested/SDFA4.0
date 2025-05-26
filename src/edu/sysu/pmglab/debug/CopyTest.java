@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class CopyTest {
     public static void main(String[] args) throws IOException {
-        String cml = "select -f /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/sv_ped/G30_fam.ped " +
+        String cml = "select -f /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf/sdf/test.ped " +
                 "-d /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf/sdf --count " +
                 "-o /Users/wenjiepeng/Desktop/SDFA_4.0/UKB";
         PedBasedSDFSelectionProgram.main(cml.split(" "));

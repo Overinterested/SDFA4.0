@@ -22,7 +22,7 @@ import java.util.HashSet;
  */
 public class RefRNAElement {
     SourceRNARecord rnaRecord;
-    TIntSet updateFileIndex = new TIntHashSet();
+    TIntSet updateFileIndex;
     List<int[]> overlappedSDSVRangeInDifferentSDSVCache;
     private static final HashSet<Genotype> EMPTY_GTY = new HashSet<>();
 
@@ -34,6 +34,7 @@ public class RefRNAElement {
     }
 
     public RefRNAElement(int sizeOfSample) {
+        updateFileIndex = new TIntHashSet(sizeOfSample + 1);
         overlappedSDSVRangeInDifferentSDSVCache = new List<>(sizeOfSample);
         for (int i = 0; i < sizeOfSample; i++) {
             overlappedSDSVRangeInDifferentSDSVCache.add(new int[]{-1, -1});
@@ -119,7 +120,7 @@ public class RefRNAElement {
                 ISDSV sdsv = sdsvByFileID.fastGet(svIndex);
 //                // FIXME: here we can get gtys
                 Genotype gty = sdsv.getSVGenotypes().getGty(0);
-                if (gty == GenotypeConstant.MISSING_GTY){
+                if (gty == GenotypeConstant.MISSING_GTY) {
                     continue;
                 }
                 float[] affect = rnaAffectedCalculator.affect(sdsv, rnaRecord);
@@ -160,7 +161,7 @@ public class RefRNAElement {
                     float[] numericValueInSample = numericValues.fastGet(sampleIndex);
                     for (int affectedIndex = 0; affectedIndex < affect.length; affectedIndex++) {
                         numericValueInSample[affectedIndex] += affect[affectedIndex];
-                        if (numericValueInSample[affectedIndex]>=1f){
+                        if (numericValueInSample[affectedIndex] >= 1f) {
                             numericValueInSample[affectedIndex] = 1f;
                         }
                     }

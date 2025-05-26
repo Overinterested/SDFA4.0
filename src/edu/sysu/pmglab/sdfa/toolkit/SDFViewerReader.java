@@ -83,7 +83,7 @@ public class SDFViewerReader implements ReaderAdaptor {
                 put("INDEX", new LinkedSet<>(new String[]{"INDEX"}));
 
                 // 加入所有的字段信息
-                for (FieldGroupMeta fieldGroup : reader.getAllFieldGroups()) {
+                for (FieldGroupMeta fieldGroup : reader.getAllFields().getAllFieldGroups()) {
                     String groupName = fieldGroup.groupName();
                     if (containsKey(groupName)) {
                         int dupIndex = 1;

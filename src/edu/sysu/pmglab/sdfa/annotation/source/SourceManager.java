@@ -30,7 +30,7 @@ public class SourceManager {
         }
     }
 
-    public List<ITask> loadSource(){
+    public List<ITask> loadSource() {
         int size = sources.size();
         List<ITask> tasks = new List<>(size);
         for (int i = 0; i < size; i++) {
@@ -47,7 +47,10 @@ public class SourceManager {
         for (int i = 0; i < sources.size(); i++) {
             Source source = sources.valueOf(i);
             for (int j = startFileIndex; j < Math.min(size, endFileIndex); j++) {
-                tasks.addAll(source.annotate(sdsvManager.getByIndex(j)));
+                List<ITask> annotateTasks = source.annotate(sdsvManager.getByIndex(j));
+                if (annotateTasks != null && !annotateTasks.isEmpty()) {
+                    tasks.addAll(annotateTasks);
+                }
             }
         }
         return tasks;
@@ -57,7 +60,7 @@ public class SourceManager {
         return sources.valueOf(index);
     }
 
-    public Source getSourceByFile(String fileName){
+    public Source getSourceByFile(String fileName) {
         return fileNameMap.get(fileName);
     }
 
@@ -67,6 +70,7 @@ public class SourceManager {
 
     /**
      * add source into output manager
+     *
      * @param source
      */
     public synchronized static void addSource(Source source) {
@@ -74,16 +78,17 @@ public class SourceManager {
         instance.sources.add(source.setSourceID(instance.sources.size()));
     }
 
-    public static int numOfSource(){
+    public static int numOfSource() {
         return instance.sources.size();
     }
 
     @Deprecated
-    public void clear(){
+    public void clear() {
         sources = new LinkedSet<>();
     }
+
     @Deprecated
-    public void addExtraSource(Source source){
+    public void addExtraSource(Source source) {
         sources.add(source);
     }
 }

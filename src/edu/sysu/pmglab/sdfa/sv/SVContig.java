@@ -192,8 +192,23 @@ public class SVContig {
         List<CCFMetaItem> res = new List<>(contigRanges.size() + 1);
         // record metas of all contig names
         List<String> allContigNames = new List<>(contigRanges.keySet());
+
+        // remove invalid contig from the end util the one that has at least a record in the SDF
+        int popSize = 0;
+        for (int i = allContigNames.size() - 1; i >= 0; i--) {
+            String contigName = allContigNames.fastGet(i);
+            IntInterval range = contigRanges.get(contigName);
+            if (range == null || range.start() == range.end()) {
+                popSize++;
+            } else {
+                break;
+            }
+        }
+        for (int i = 0; i < popSize; i++) {
+            allContigNames.popLast();
+        }
+        // record metas of all contigs and their ranges
         res.add(CCFMetaItem.of(SDF_CONTIG_NAMES, allContigNames));
-        // record metas of all contig ranges
         for (String validContigName : allContigNames) {
             IntInterval tmpInterval = contigRanges.get(validContigName);
             res.add(new CCFMetaItem(validContigName, FieldType.intInterval, tmpInterval));
@@ -236,13 +251,30 @@ public class SVContig {
 
         SVContig svContig = new SVContig();
         // load contig ranges
-        for (int i = 0; i < contigNames.size(); i++) {
+        int size = contigNames.size();
+        for (int i = 0; i < size; i++) {
             String contigName = contigNames.fastGet(i);
             svContig.addContigName(contigName);
             List<CCFMetaItem> encodedContigRange = metas.get(contigName);
             IntInterval contigNameRange = encodedContigRange.fastGet(0).getValue();
             svContig.contigRanges.put(contigName, new IntInterval(contigNameRange.start(), contigNameRange.end()));
             svContig.contigCount.fastSet(i, contigNameRange.end() - contigNameRange.start());
+        }
+        int dropLast = 0;
+        for (int i = size - 1; i >= 0; i--) {
+            int count = svContig.contigCount.fastGet(i);
+            if (count == 0) {
+                dropLast++;
+                continue;
+            }
+            break;
+        }
+        if (dropLast != 0) {
+            for (int i = 0; i < dropLast; i++) {
+                int index = svContig.contigs.size();
+                svContig.contigCount.popLast();
+                svContig.contigRanges.removeByIndex(index-1);
+            }
         }
         svContig.built = true;
         return svContig;
@@ -319,6 +351,7 @@ public class SVContig {
 
     /**
      * merge two SVContig class with summing contig names and each count of them
+     *
      * @param var1
      * @param var2
      * @return

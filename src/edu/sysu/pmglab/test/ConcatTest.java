@@ -2,6 +2,7 @@ package edu.sysu.pmglab.test;
 
 import edu.sysu.pmglab.sdfa.command.SDFAProgram;
 import edu.sysu.pmglab.test.process.Finish;
+import org.rosuda.REngine.REngineException;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
  */
 @Finish
 public class ConcatTest {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         String concatCML = "concat -d /Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf -o /Users/wenjiepeng/Desktop/SDFA_4.0/test/concat/res";
         SDFAProgram.main(concatCML.split(" "));
     }

@@ -1,6 +1,8 @@
 package edu.sysu.pmglab.sdfa.sv.sdsv.container;
 
+import edu.sysu.pmglab.ccf.CCFTable;
 import edu.sysu.pmglab.ccf.CCFWriter;
+import edu.sysu.pmglab.ccf.meta.CCFMeta;
 import edu.sysu.pmglab.ccf.record.BoxRecord;
 import edu.sysu.pmglab.ccf.record.IRecord;
 import edu.sysu.pmglab.container.indexable.DynamicIndexableMap;
@@ -24,9 +26,10 @@ import java.io.IOException;
  */
 public class SingleFileSDSVManager {
     int index;
+    File sdfFile;
     SDFReader reader;
     CCFWriter writer;
-    File sdfFile;
+    boolean annotated;
     final LiveFile file;
     SDFReadType readerMode;
     LinkedSet<String> individuals;
@@ -82,21 +85,26 @@ public class SingleFileSDSVManager {
         BoxRecord tmpRecord = reader.getReader().getRecord();
         writer = CCFWriter.setOutput(file).addFields(SDFReadType.FULL.getReaderMode().getMandatoryFields()).instance();
         int index = tmpRecord.indexOf(SDFHeader.ANNOTATION_INDEX_GROUP.getMetas().getField(0));
-        for (int i = 0; i < recordsOfContigs.size(); i++) {
+        int contigSize = recordsOfContigs.size();
+        for (int i = 0; i < contigSize; i++) {
             List<ISDSV> svs = recordsOfContigs.getByIndex(i);
-            for (ISDSV sv : svs) {
+            while (!svs.isEmpty()) {
+                ISDSV sv = svs.popFirst();
                 record = reader.readRecord();
                 if (sv.existAnnot()) {
                     record.set(index, sv.getAnnotationIndexes());
                 }
                 writer.write(record);
+                record.clear();
             }
-            svs.clear();
         }
-        recordsOfContigs = null;
-        writer.addMeta(reader.getReaderOption().getSDFTable().getMeta());
-        reader.close();
+        recordsOfContigs.clear();
+        CCFMeta meta = reader.getReaderOption().getSDFTable().getMeta();
+        writer.addMeta(meta);
+        reader.closeAll();
         writer.close();
+        writer = null;
+        CCFTable.gc();
     }
 
     public void clear() {
@@ -106,7 +114,7 @@ public class SingleFileSDSVManager {
     public SDFReader getReader() {
         if (reader == null) {
             try {
-                reader = new SDFReader(sdfFile,readerMode);
+                reader = new SDFReader(sdfFile, readerMode);
                 reader.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -166,6 +174,15 @@ public class SingleFileSDSVManager {
 
     public SingleFileSDSVManager setReaderMode(SDFReadType readerMode) {
         this.readerMode = readerMode;
+        return this;
+    }
+
+    public boolean isAnnotated() {
+        return annotated;
+    }
+
+    public SingleFileSDSVManager annotated(boolean annotated){
+        this.annotated = annotated;
         return this;
     }
 }

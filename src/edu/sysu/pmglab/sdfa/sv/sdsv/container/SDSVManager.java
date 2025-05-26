@@ -30,6 +30,7 @@ import java.util.HashSet;
  */
 public class SDSVManager extends ICommandProgram {
     File outputDir;
+    File annotationOutputDir;
     String callingType;
     boolean silent = false;
     SVFilterManager filterManager;
@@ -162,7 +163,6 @@ public class SDSVManager extends ICommandProgram {
                 }
             })));
         }
-
         return tasks;
     }
 
@@ -174,8 +174,9 @@ public class SDSVManager extends ICommandProgram {
                     (status, context) -> {
                         SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
                         LiveFile file = singleFileSDSVManager.getFile();
-                        File annotatedSDFFile = FileUtils.getSubFile(outputDir, file.getName());
+                        File annotatedSDFFile = FileUtils.getSubFile(annotationOutputDir, file.getName());
                         if (annotatedSDFFile.exists()) {
+                            singleFileSDSVManager.annotated(true);
                             return;
                         }
                         fileManagers.valueOf(finalI).loadWithInit();
@@ -201,8 +202,6 @@ public class SDSVManager extends ICommandProgram {
     }
 
     public List<ITask> writeTask(int startIndex, int endIndex) {
-        File annotationDir = FileUtils.getSubFile(outputDir, "annotation");
-        annotationDir.mkdirs();
         List<ITask> tasks = new List<>(endIndex - startIndex);
         for (int i = startIndex; i < endIndex; i++) {
             int finalI = i;
@@ -210,11 +209,9 @@ public class SDSVManager extends ICommandProgram {
                     (status, context) -> {
                         SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
                         String fileName = singleFileSDSVManager.getReader().getFile().getName();
-                        String outputFileName = FileUtils.getSubFile(annotationDir.toString(), fileName);
+                        String outputFileName = FileUtils.getSubFile(annotationOutputDir.toString(), fileName);
                         File outputFile = new File(outputFileName);
-                        boolean exists = outputFile.exists();
-                        // TODO
-                        if (!exists) {
+                        if (!singleFileSDSVManager.isAnnotated()) {
                             singleFileSDSVManager.writeTo(outputFile);
                         }
                         SourceOutputManager.attachAnnotatedFile(finalI, outputFile);
@@ -281,5 +278,16 @@ public class SDSVManager extends ICommandProgram {
 
     public File getOutputDir() {
         return outputDir;
+    }
+
+    public SDSVManager initAnnotationOutputDir() {
+        this.annotationOutputDir = FileUtils.getSubFile(outputDir, "annotation");
+        if (!this.annotationOutputDir.exists()) {
+            boolean mkdirs = this.annotationOutputDir.mkdirs();
+            if (!mkdirs) {
+                throw new UnsupportedOperationException("Can't create annotation output directory.");
+            }
+        }
+        return this;
     }
 }
