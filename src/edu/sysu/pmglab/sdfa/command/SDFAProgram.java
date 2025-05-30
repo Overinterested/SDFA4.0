@@ -33,7 +33,7 @@ import java.io.IOException;
                         @Counter(item = {
                                 "annotate", "merge", "nagf", "vcf2sdf", "integrate", "gui",
                                 "concat", "filter", "extract", "select", "extract_samples",
-                                "sample_file_map", "pstr"
+                                "sample_file_map", "pstr", "identify"
                         }, rule = Counter.Type.EQUAL, count = 1)
                 }
         )
@@ -81,6 +81,9 @@ public class SDFAProgram extends ICommandProgram {
     @EntryOption({"pstr"})
     String[] pstr;
 
+    @EntryOption({"identify"})
+    String[] identify;
+
     public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         SDFAProgram program = new SDFAProgram();
         CommandOptions options = program.parse(args);
@@ -122,6 +125,8 @@ public class SDFAProgram extends ICommandProgram {
             } catch (Error|Exception e) {
                 e.printStackTrace();
             }
+        } else if (options.passed("identify")){
+            RelatedGeneIdentifyProgram.main(options.value("identify"));
         }
     }
 }

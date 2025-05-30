@@ -36,6 +36,8 @@ public class RefSeqGTFParser {
     public static Bytes UNKNOWN_FLAG = new Bytes("unk");
     public static Bytes INCMPL_FLAG = new Bytes("incmpl");
     public static byte[] HGNC_BYTES = "HGNC".getBytes();
+    private static Bytes XR_PREFIX = new Bytes("XR");
+    private static Bytes XM_PREFIX = new Bytes("XM");
     static IndexableSet<Bytes> indexableTypeSet = new LinkedSet<>(new Bytes[]{
             new Bytes("gene"),
             new Bytes("transcript"),
@@ -220,6 +222,9 @@ public class RefSeqGTFParser {
 
         for (int i = 0; i < list.size(); i++) {
             KggSeqTranscriptRecord tmp = list.fastGet(i);
+            if (tmp.transcriptName.startsWith(XM_PREFIX) || tmp.transcriptName.startsWith(XR_PREFIX)){
+                continue;
+            }
             Chromosome chromosome = Chromosome.get(tmp.contigName.toString());
             if (storedContigName != null && !storedContigName.contains(chromosome)) {
                 continue;

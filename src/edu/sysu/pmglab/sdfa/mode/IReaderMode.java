@@ -309,3 +309,19 @@ class AnnotationGTMode implements IReaderMode {
         return 6;
     }
 }
+
+class AnnotationSeek implements IReaderMode{
+    private static final AnnotationSeek instance = new AnnotationSeek();
+    final FieldGroupMetas metas = new FieldGroupMetas().addFields(SDFHeader.ANNOTATION_INDEX_GROUP.getMetas());
+    @Override
+    public FieldGroupMetas getMandatoryFields() {
+        return metas;
+    }
+
+    public static AnnotationSeek getInstance() {
+        return instance;
+    }
+    public int indexOfAnnotationIndex() {
+        return 0;
+    }
+}

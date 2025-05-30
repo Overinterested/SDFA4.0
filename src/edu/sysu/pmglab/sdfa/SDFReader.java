@@ -333,7 +333,9 @@ public class SDFReader {
     }
 
     public SDFReader limit(String nameOfContig) throws IOException {
-        IntInterval rangeByName = option.getSDFTable().contig.getRangeByName(nameOfContig);
+        SVContig contig = option.getSDFTable().contig;
+        int index = contig.getContigIndexByName(nameOfContig);
+        IntInterval rangeByName = contig.getRangeByName(contig.getContigNameByIndex(index));
         if (rangeByName == null) {
             return null;
         }

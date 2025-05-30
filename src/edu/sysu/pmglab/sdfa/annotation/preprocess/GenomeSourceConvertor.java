@@ -46,7 +46,6 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
     protected boolean storeHeader;
     protected final File outputDir;
     protected List<Bytes> header = new List<>();
-    protected TIntIntHashMap contigIndexCount = new TIntIntHashMap();
     TIntObjectHashMap<HashMap<String, Integer>> contigGeneCountMap = new TIntObjectHashMap<>();
 
     private static final Comparator<IRecord> comparator = (o1, o2) -> {
@@ -152,16 +151,17 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
                 if (curIndex == null) {
                     rnaIndexMap.put(tmpGeneName, 0);
                     popRecord.set(2, count).set(3, 0);
-                    continue;
-                }
-                popRecord.set(2, count).set(3, curIndex);
-                if (curIndex + 1 == count) {
-                    geneNameCount.remove(tmpGeneName);
-                    rnaIndexMap.remove(tmpGeneName);
                 } else {
-                    rnaIndexMap.put(tmpGeneName, curIndex + 1);
+                    popRecord.set(2, count).set(3, curIndex);
+                    if (curIndex + 1 == count) {
+                        geneNameCount.remove(tmpGeneName);
+                        rnaIndexMap.remove(tmpGeneName);
+                    } else {
+                        rnaIndexMap.put(tmpGeneName, curIndex + 1);
+                    }
                 }
             }
+            contig.countContigByIndex(popRecord.get(0));
             writer.write(popRecord);
         }
         this.meta = new SourceMeta(contig.getContigRanges());
@@ -192,8 +192,6 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
         @Override
         public IRecord covertLineToRecord(List<Bytes> lineItems, IRecord record) {
             int indexOfContig = contig.getContigIndexByName(lineItems.get(2).toString());
-
-            contigIndexCount.put(indexOfContig, contigIndexCount.get(indexOfContig) + 1);
             String geneName = lineItems.get(12).toString();
             String rnaName = lineItems.get(1).toString();
             byte strand = lineItems.get(3).startsWith(Constant.ADD) ? (byte) 0 : (byte) 1;
@@ -230,7 +228,6 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
                     exons.set(i, exonsEnd[i / 2]);
                 }
             }
-            contig.countContigByIndex(indexOfContig);
             return record.set(0, indexOfContig)
                     .set(1, geneName)
                     .set(2, -1)

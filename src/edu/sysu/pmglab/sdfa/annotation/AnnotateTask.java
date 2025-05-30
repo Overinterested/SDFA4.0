@@ -30,9 +30,7 @@ public interface AnnotateTask {
             List<ISDSV> svs = fileSDSVManager.getSVsByContig(contigName);
             if (svs != null && !svs.isEmpty() && contain(contigName)) {
                 tasks.add((
-                        (status, context) -> {
-                            annotateContig(svs, contigName);
-                        }
+                        (status, context) -> annotateContig(svs, contigName)
                 ));
             }
         }

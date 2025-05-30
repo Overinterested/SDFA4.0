@@ -14,8 +14,10 @@ public enum SDFReadType {
     MERGE(MergeMode.getInstance()),
     COORDINATE(CoordinateMode.getInstance()),
     ANNOTATION(AnnotationMode.getInstance()),
-    ANNOTATION_GT(AnnotationGTMode.getInstance());
-    IReaderMode readerMode;
+    ANNOTATION_GT(AnnotationGTMode.getInstance()),
+    ANNOTATION_SEEK(AnnotationSeek.getInstance());
+
+    final IReaderMode readerMode;
 
     public static final HashMap<String, SDFReadType> readModeMap = new HashMap<>();
 
@@ -32,7 +34,7 @@ public enum SDFReadType {
         this.readerMode = readerMode;
     }
 
-    public static void add(String name, SDFReadType readType){
+    public static void add(String name, SDFReadType readType) {
         readModeMap.put(name, readType);
     }
 
