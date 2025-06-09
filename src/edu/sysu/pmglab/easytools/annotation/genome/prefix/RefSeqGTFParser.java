@@ -36,8 +36,10 @@ public class RefSeqGTFParser {
     public static Bytes UNKNOWN_FLAG = new Bytes("unk");
     public static Bytes INCMPL_FLAG = new Bytes("incmpl");
     public static byte[] HGNC_BYTES = "HGNC".getBytes();
+
     private static Bytes XR_PREFIX = new Bytes("XR");
     private static Bytes XM_PREFIX = new Bytes("XM");
+    private static Bytes UNASSIGNED_PREFIX = new Bytes("unassigned");
     static IndexableSet<Bytes> indexableTypeSet = new LinkedSet<>(new Bytes[]{
             new Bytes("gene"),
             new Bytes("transcript"),
@@ -51,6 +53,7 @@ public class RefSeqGTFParser {
         ByteStream cache = new ByteStream();
         ByteStream outputCache = new ByteStream();
         LiveFile liveFile = LiveFile.of(gtfFile.toString());
+
         ReaderStream readerStream = liveFile.openAsText();
         WriterStream writerStream = new WriterStream(new File(outputKggFile.toString()), WriterStream.Option.DEFAULT);
 
@@ -59,7 +62,6 @@ public class RefSeqGTFParser {
         Bytes contigName;
         Bytes transcriptName = null;
         Bytes idOfRNAHGNC;
-        List<Bytes> infoItems;
         while (readerStream.readline(cache) != -1) {
             Bytes line = cache.toBytes();
             if (line.byteAt(0) == Constant.NUMBER_SIGN) {
@@ -68,21 +70,22 @@ public class RefSeqGTFParser {
             }
             break;
         }
-        int indexOfHGNC = -1;
-        KggSeqTranscriptRecord record = new KggSeqTranscriptRecord();
-        List<KggSeqTranscriptRecord> list = new List<>();
+        Bytes hgncBytes = null;
         boolean startGene = true;
         boolean startRNA = true;
         boolean firstRNAInGene = true;
-        Bytes hgncBytes = null;
+        List<KggSeqTranscriptRecord> list = new List<>();
+        KggSeqTranscriptRecord record = new KggSeqTranscriptRecord();
+
         do {
-            hgncBytes = null;
+            // drop the annotation line
             Bytes line = cache.toBytes();
             if (line.byteAt(0) == Constant.NUMBER_SIGN) {
                 cache.clear();
                 continue;
             }
 
+            hgncBytes = null;
             List<Bytes> split = new List<>();
             Iterator<Bytes> iterator = line.split(Constant.TAB);
             while (iterator.hasNext()) split.add(iterator.next().detach());
@@ -222,7 +225,10 @@ public class RefSeqGTFParser {
 
         for (int i = 0; i < list.size(); i++) {
             KggSeqTranscriptRecord tmp = list.fastGet(i);
-            if (tmp.transcriptName.startsWith(XM_PREFIX) || tmp.transcriptName.startsWith(XR_PREFIX)){
+            Bytes tmpTranscriptName = tmp.transcriptName;
+            if (tmpTranscriptName.startsWith(XM_PREFIX)
+                    || tmpTranscriptName.startsWith(XR_PREFIX)
+                    || tmpTranscriptName.startsWith(UNASSIGNED_PREFIX)) {
                 continue;
             }
             Chromosome chromosome = Chromosome.get(tmp.contigName.toString());

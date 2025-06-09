@@ -22,7 +22,7 @@ public class NAGFTest {
         String command = "--multiple-vcf --gene-level --rna-batch 500 -t 1 " +
                 "-dir /Users/wenjiepeng/Desktop/SDFA3.0/nagf/analyze/Glaucoma_Normal/sniffles2/drop_null_gty_AND_DV_7/all_sdf " +
                 "-o /Users/wenjiepeng/Desktop/SDFA3.0/nagf/analyze/Glaucoma_Normal/sniffles2/drop_null_gty_AND_DV_7/res " +
-                "--genome-file /Users/wenjiepeng/Desktop/SDFA3.0/nagf/analyze/Exophthalmos_Glaucoma/sniffles/sdf_4.0_analyze/refGene_hg38_kggseq_v2.txt.gz.ccf";
+                "--genome-file /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/sub_phenotypes/GRCh38_latest_genomic.gtf._kggseq_version.txt.ccf";
         NAGFProgram.main(command.split(" "));
     }
 }

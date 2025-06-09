@@ -138,16 +138,17 @@ public class NAGFProgram extends ICommandProgram {
         ProgressBar bar = new ProgressBar.Builder()
                 .setTextRenderer("Numeric annotation speed", "transcripts")
                 .build();
-        int index = 0, minRefIndex, maxRefIndex;
+        int index = 0, minRefIndex = 0, maxRefIndex = numOfLoadRefRNA;
         while (true) {
             // load reference
-            minRefIndex = index * numOfLoadRefRNA;
-            maxRefIndex = (index + 1) * numOfLoadRefRNA;
-            IntInterval loadPointer = refGenomicElementManager.loadRefRNA(minRefIndex, maxRefIndex);
+            minRefIndex = maxRefIndex;
+            maxRefIndex += numOfLoadRefRNA;
+            IntInterval loadPointer = refGenomicElementManager.loadRefRNA(minRefIndex, maxRefIndex, geneLevel);
             if (loadPointer == null) {
                 // all reference transcripts have been scanned
                 break;
             }
+            maxRefIndex = loadPointer.end();
             // load SVs
             List<ITask> loadSVTasks = sdsvGenomicIndexManager.updateSDSV(minRefIndex, loadPointer.end());
             if (loadSVTasks != null) {

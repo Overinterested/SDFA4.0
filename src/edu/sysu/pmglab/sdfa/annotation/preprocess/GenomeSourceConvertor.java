@@ -138,6 +138,7 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
             int tmpContigIndex = popRecord.get(0);
             if (tmpContigIndex != contigIndex) {
                 contigGeneCountMap.get(contigIndex).clear();
+                contigIndex = tmpContigIndex;
                 rnaIndexMap.clear();
             }
             HashMap<String, Integer> geneNameCount = contigGeneCountMap.get(tmpContigIndex);
@@ -149,7 +150,7 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
             } else {
                 Integer curIndex = rnaIndexMap.get(tmpGeneName);
                 if (curIndex == null) {
-                    rnaIndexMap.put(tmpGeneName, 0);
+                    rnaIndexMap.put(tmpGeneName, 1);
                     popRecord.set(2, count).set(3, 0);
                 } else {
                     popRecord.set(2, count).set(3, curIndex);
@@ -165,7 +166,7 @@ public abstract class GenomeSourceConvertor implements SourceConvertor {
             writer.write(popRecord);
         }
         this.meta = new SourceMeta(contig.getContigRanges());
-        List<CCFMetaItem> save = (List<CCFMetaItem>) meta.save();
+        List<CCFMetaItem> save = meta.save();
         for (CCFMetaItem ccfMetaItem : save) {
             writer.addMeta(ccfMetaItem);
         }

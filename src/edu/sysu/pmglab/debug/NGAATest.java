@@ -14,7 +14,7 @@ public class NGAATest {
         String s = "--multiple-vcf --gene-level -t 10 " +
                 "-d /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf/sdf " +
                 "-o /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf " +
-                "--genome-file /Users/wenjiepeng/Desktop/SDFA3.0/annotation/annotation/resource/genome/refGene/GRCh38_latest_genomic.gtf.gz";
+                "--genome-file /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/sub_phenotypes/GRCh38_latest_genomic.gtf._kggseq_version.txt.ccf";
         NAGFProgram.main(s.split(" "));
     }
 }

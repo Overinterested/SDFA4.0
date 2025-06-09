@@ -16,6 +16,7 @@ import edu.sysu.pmglab.sdfa.nagf.NAGFMode;
 import edu.sysu.pmglab.sdfa.nagf.numeric.output.AbstractOutputNumericFeature;
 import edu.sysu.pmglab.sdfa.nagf.numeric.output.OutputNumericGeneFeature;
 import edu.sysu.pmglab.sdfa.nagf.numeric.output.OutputNumericRNAFeature;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,34 +59,65 @@ public class RefGenomicElementManager {
      * @return the property pointer interval for loading; if more than the max pointer, return null
      * @throws IOException
      */
-    public IntInterval loadRefRNA(int minRefIndex, int maxRefIndex) throws IOException {
+    public IntInterval loadRefRNA(int minRefIndex, int maxRefIndex, boolean geneLevel) throws IOException {
         int numOfRecords = (int) reader.numOfRecords();
         if (reader.isClosed() || minRefIndex >= numOfRecords) {
             // closed or has read all
             return null;
         }
+        TObjectIntHashMap<String> geneNameRNACountMap = geneLevel ?
+                new TObjectIntHashMap<>(maxRefIndex - minRefIndex, 0.75f, -1) : null;
         int trueMaxRefIndex = Math.min(maxRefIndex, numOfRecords);
         // load new reference transcripts
-        for (int i = 0; i < trueMaxRefIndex - minRefIndex; i++) {
+        int i;
+        for (i = 0; i < trueMaxRefIndex - minRefIndex; i++) {
             reader.read(record);
             // reuse the instance created before
             if (loadedRNAList.size() <= i) {
                 loadedRNAList.add(new RefRNAElement(sizeOfSample));
             }
-            loadedRNAList.fastGet(i).setRnaRecord(SourceRNARecord.load(record));
+            SourceRNARecord rnaRecord = SourceRNARecord.load(record);
+            processForGeneLevelLoad(rnaRecord, geneNameRNACountMap);
+            loadedRNAList.fastGet(i).setRnaRecord(rnaRecord);
         }
-        //region clear expired objects
-        if (trueMaxRefIndex != maxRefIndex) {
-            List<RefRNAElement> lastList = new List<>();
-            int numOfValidIndex = trueMaxRefIndex - minRefIndex;
-            for (int j = 0; j < numOfValidIndex; j++) {
-                lastList.add(loadedRNAList.fastGet(j));
+        if (geneLevel) {
+            while (geneNameRNACountMap.size() != 0) {
+                reader.read(record);
+                // reuse the instance created before
+                if (loadedRNAList.size() <= i) {
+                    loadedRNAList.add(new RefRNAElement(sizeOfSample));
+                }
+                SourceRNARecord rnaRecord = SourceRNARecord.load(record);
+                processForGeneLevelLoad(rnaRecord, geneNameRNACountMap);
+                loadedRNAList.fastGet(i).setRnaRecord(rnaRecord);
+                i++;
+                trueMaxRefIndex++;
             }
-            loadedRNAList.clear();
-            loadedRNAList.addAll(lastList);
         }
+//        //region clear expired objects
+//        if (trueMaxRefIndex != maxRefIndex) {
+//            List<RefRNAElement> lastList = new List<>();
+//            int numOfValidIndex = trueMaxRefIndex - minRefIndex;
+//            for (int j = 0; j < numOfValidIndex; j++) {
+//                lastList.add(loadedRNAList.fastGet(j));
+//            }
+//            loadedRNAList.clear();
+//            loadedRNAList.addAll(lastList);
+//        }
         //endregion
         return new IntInterval(minRefIndex, trueMaxRefIndex);
+    }
+
+    public void processForGeneLevelLoad(SourceRNARecord rnaRecord, TObjectIntHashMap<String> geneNameRNACountMap) {
+        if (rnaRecord.getNumOfRNAForGene() != 1) {
+            String nameOfGene = rnaRecord.getNameOfGene();
+            int currNumOfRNAForGene = geneNameRNACountMap.get(nameOfGene);
+            if (currNumOfRNAForGene == -1) {
+                geneNameRNACountMap.put(nameOfGene, currNumOfRNAForGene);
+            } else if (currNumOfRNAForGene == rnaRecord.getIndexOfRNA() + 1) {
+                geneNameRNACountMap.remove(nameOfGene);
+            }
+        }
     }
 
     public static RefGenomicElementManager getInstance() {

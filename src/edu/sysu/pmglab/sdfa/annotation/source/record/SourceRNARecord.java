@@ -13,6 +13,7 @@ import edu.sysu.pmglab.easytools.calculator.TranscriptCalculator;
 public class SourceRNARecord implements SourceRecord {
     byte strand;
     int[] exons;
+    int numOfRNAForGene;
     TranscriptCalculator calc;
     String nameOfRNA, nameOfGene;
     IntInterval codingRange, range;
@@ -52,6 +53,7 @@ public class SourceRNARecord implements SourceRecord {
     public static SourceRNARecord load(IRecord record) {
         SourceRNARecord rnaRecord = new SourceRNARecord();
         rnaRecord.nameOfGene = record.get(1);
+        rnaRecord.numOfRNAForGene = record.get(2);
         rnaRecord.indexOfRNA = record.get(3);
         rnaRecord.nameOfRNA = record.get(4);
         rnaRecord.strand = (byte) (int) record.get(5);
@@ -129,5 +131,9 @@ public class SourceRNARecord implements SourceRecord {
 
     public IntInterval getWholeRange() {
         return new IntInterval(range.start() - UPSTREAM_DISTANCE, range.end() + DOWNSTREAM_DISTANCE);
+    }
+
+    public int getNumOfRNAForGene() {
+        return numOfRNAForGene;
     }
 }
