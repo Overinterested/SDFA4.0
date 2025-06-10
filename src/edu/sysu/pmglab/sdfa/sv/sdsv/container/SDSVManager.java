@@ -1,7 +1,6 @@
 package edu.sysu.pmglab.sdfa.sv.sdsv.container;
 
 import edu.sysu.pmglab.LogBackOptions;
-import edu.sysu.pmglab.bytecode.Bytes;
 import edu.sysu.pmglab.commandParser.ICommandProgram;
 import edu.sysu.pmglab.container.indexable.LinkedSet;
 import edu.sysu.pmglab.container.interval.IntInterval;
@@ -21,7 +20,6 @@ import edu.sysu.pmglab.sdfa.sv.vcf.VCFInstance;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 
 /**
  * @author Wenjie Peng
@@ -30,7 +28,9 @@ import java.util.HashSet;
  */
 public class SDSVManager extends ICommandProgram {
     File outputDir;
+    File annotatedCacheDir;
     File annotationOutputDir;
+
     String callingType;
     boolean silent = false;
     SVFilterManager filterManager;
@@ -174,10 +174,18 @@ public class SDSVManager extends ICommandProgram {
                     (status, context) -> {
                         SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
                         LiveFile file = singleFileSDSVManager.getFile();
-                        File annotatedSDFFile = FileUtils.getSubFile(annotationOutputDir, file.getName());
-                        if (annotatedSDFFile.exists()) {
+
+                        File annotatedSDFFileInOutput = FileUtils.getSubFile(annotationOutputDir, file.getName());
+                        if (annotatedSDFFileInOutput.exists()) {
                             singleFileSDSVManager.annotated(true);
                             return;
+                        } else if (annotatedCacheDir != null) {
+                            File cacheFile = FileUtils.getSubFile(annotatedCacheDir, file.getName());
+                            if (cacheFile.exists()) {
+                                FileUtils.copy(file.getPath(), cacheFile.getPath());
+                                singleFileSDSVManager.annotated(true);
+                                return;
+                            }
                         }
                         fileManagers.valueOf(finalI).loadWithInit();
                     }
@@ -290,4 +298,6 @@ public class SDSVManager extends ICommandProgram {
         }
         return this;
     }
+
+
 }

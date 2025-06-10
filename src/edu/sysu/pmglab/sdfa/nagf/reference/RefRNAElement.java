@@ -9,6 +9,7 @@ import edu.sysu.pmglab.sdfa.nagf.AnnotatedSDFManager;
 import edu.sysu.pmglab.sdfa.nagf.numeric.process.RNAAffectedCalculator;
 import edu.sysu.pmglab.sdfa.sv.sdsv.ISDSV;
 import edu.sysu.pmglab.sdfa.sv.vcf.format.GTBox;
+import gnu.trove.impl.sync.TSynchronizedIntSet;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
@@ -22,7 +23,8 @@ import java.util.HashSet;
  */
 public class RefRNAElement {
     SourceRNARecord rnaRecord;
-    TIntSet updateFileIndex;
+    TSynchronizedIntSet updateFileIndex;
+//    TIntSet updateFileIndex;
     List<int[]> overlappedSDSVRangeInDifferentSDSVCache;
     private static final HashSet<Genotype> EMPTY_GTY = new HashSet<>();
 
@@ -34,7 +36,7 @@ public class RefRNAElement {
     }
 
     public RefRNAElement(int sizeOfSample) {
-        updateFileIndex = new TIntHashSet(sizeOfSample + 1);
+        updateFileIndex = new TSynchronizedIntSet(new TIntHashSet(sizeOfSample + 1));
         overlappedSDSVRangeInDifferentSDSVCache = new List<>(sizeOfSample);
         for (int i = 0; i < sizeOfSample; i++) {
             overlappedSDSVRangeInDifferentSDSVCache.add(new int[]{-1, -1});
@@ -58,9 +60,8 @@ public class RefRNAElement {
     }
 
 
-    public RefRNAElement setRnaRecord(SourceRNARecord rnaRecord) {
+    public void setRnaRecord(SourceRNARecord rnaRecord) {
         this.rnaRecord = rnaRecord;
-        return this;
     }
 
     public RefRNAElement setOverlappedSDSVRangeInDifferentSDSVCache(List<int[]> overlappedSDSVRangeInDifferentSDSVCache) {

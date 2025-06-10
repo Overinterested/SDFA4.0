@@ -57,7 +57,6 @@ public class RefGenomicElementManager {
      * @param minRefIndex the min pointer
      * @param maxRefIndex the max pointer
      * @return the property pointer interval for loading; if more than the max pointer, return null
-     * @throws IOException
      */
     public IntInterval loadRefRNA(int minRefIndex, int maxRefIndex, boolean geneLevel) throws IOException {
         int numOfRecords = (int) reader.numOfRecords();

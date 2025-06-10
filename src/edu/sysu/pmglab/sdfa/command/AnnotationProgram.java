@@ -61,6 +61,9 @@ public class AnnotationProgram extends ICommandProgram {
     @Option(names = {"--config"}, type = FieldType.file, required = true)
     File configFilePath;
 
+    @Option(names = {"--annotated-cache-dir", "-acd"}, type = FieldType.file, required = false)
+    File annotatedCache;
+
     static boolean output = true;
 
     private static final HashMap<String, BiFunction<ISDSV, IRecord, Boolean>> furthAnnotateFunctionList = new HashMap<>();

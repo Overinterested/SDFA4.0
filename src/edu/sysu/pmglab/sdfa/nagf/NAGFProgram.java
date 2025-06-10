@@ -138,7 +138,7 @@ public class NAGFProgram extends ICommandProgram {
         ProgressBar bar = new ProgressBar.Builder()
                 .setTextRenderer("Numeric annotation speed", "transcripts")
                 .build();
-        int index = 0, minRefIndex = 0, maxRefIndex = numOfLoadRefRNA;
+        int minRefIndex, maxRefIndex = numOfLoadRefRNA;
         while (true) {
             // load reference
             minRefIndex = maxRefIndex;
@@ -161,7 +161,6 @@ public class NAGFProgram extends ICommandProgram {
                 // handle to output different
                 refGenomicElementManager.calcNumericValues();
             }
-            index++;
             bar.step(loadPointer.end() - loadPointer.start());
         }
         bar.close();
