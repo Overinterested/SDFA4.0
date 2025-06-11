@@ -26,6 +26,10 @@ public class IndexedGeneAnnotation {
     File outputDir;
     File genomeFile;
     int threads = 4;
+    File caseDir;
+    File controlDir;
+    File annotatedFilesCache;
+
     private File respondingConfigFile;
 
     public IndexedGeneAnnotation() {
@@ -39,7 +43,7 @@ public class IndexedGeneAnnotation {
         } finally {
             if (respondingConfigFile.exists()) {
                 boolean delete = respondingConfigFile.delete();
-                if (!delete){
+                if (!delete) {
                     LogBackOptions.getRootLogger().warn("The temporary annotation configuration file cannot be deleted.");
                 }
             }
@@ -55,16 +59,23 @@ public class IndexedGeneAnnotation {
         }
     }
 
-    private File wrapRefGenomeToConfig() {
-        return genomeFile;
-    }
-
     public String[] wrapToAnnotationCommandLines() {
         List<String> commandLines = new List<>();
         commandLines.add("--threads");
         commandLines.add(String.valueOf(threads));
-        commandLines.add("--dir");
-        commandLines.add(inputDir.getPath());
+        if (inputDir != null) {
+            commandLines.add("--dir");
+            commandLines.add(inputDir.getPath());
+        } else {
+            commandLines.add("-csd");
+            commandLines.add(caseDir.getPath());
+            commandLines.add("-ctd");
+            commandLines.add(controlDir.getPath());
+        }
+        if (annotatedFilesCache != null) {
+            commandLines.add("-acd");
+            commandLines.add(annotatedFilesCache.getPath());
+        }
         commandLines.add("--output");
         commandLines.add(outputDir.getPath());
         commandLines.add("--config");
@@ -114,6 +125,21 @@ public class IndexedGeneAnnotation {
 
     public IndexedGeneAnnotation setMode(NAGFMode mode) {
         this.mode = mode;
+        return this;
+    }
+
+    public IndexedGeneAnnotation setCaseDir(File caseDir) {
+        this.caseDir = caseDir;
+        return this;
+    }
+
+    public IndexedGeneAnnotation setControlDir(File controlDir) {
+        this.controlDir = controlDir;
+        return this;
+    }
+
+    public IndexedGeneAnnotation setAnnotatedFilesCache(File annotatedFilesCache) {
+        this.annotatedFilesCache = annotatedFilesCache;
         return this;
     }
 }

@@ -166,4 +166,12 @@ public class GenomeSource implements Source {
             return this;
         }
     }
+
+    public SourceIntervalTree getTree() {
+        return tree;
+    }
+    @Override
+    public void clearSourceContent() {
+        tree = null;
+    }
 }

@@ -91,4 +91,10 @@ public class SourceManager {
     public void addExtraSource(Source source) {
         sources.add(source);
     }
+
+    public void clearSourceContent(){
+        for (Source source : sources) {
+            source.clearSourceContent();
+        }
+    }
 }

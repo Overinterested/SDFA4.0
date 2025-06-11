@@ -42,6 +42,27 @@ public class SDSVManager extends ICommandProgram {
         fileManagers = new LinkedSet<>();
     }
 
+
+    public static  SDSVManager of(String controlDir, String caseDir){
+        return of(new File(controlDir), new File(caseDir));
+    }
+
+    public static SDSVManager of(File controlDir, File caseDir) {
+        instance = new SDSVManager();
+        List<File> caseFiles = FileUtils.listFiles(caseDir);
+        List<File> controlFiles = FileUtils.listFiles(controlDir);
+        if (caseFiles == null || caseFiles.isEmpty()) {
+            throw new UnsupportedOperationException("There are no files in " + controlFiles);
+        }
+        if (controlFiles == null || controlFiles.isEmpty()) {
+            throw new UnsupportedOperationException("There are no files in " + controlFiles);
+        }
+        int index = 0;
+        index = load(controlFiles.toArray(new File[0]), index);
+        index = load(caseFiles.toArray(new File[0]), index);
+        return instance;
+    }
+
     public static SDSVManager of(String inputDir) {
         return of(new File(inputDir));
     }
@@ -53,6 +74,11 @@ public class SDSVManager extends ICommandProgram {
             throw new UnsupportedOperationException("There are no files in " + inputDir);
         }
         int index = 0;
+        index = load(files, index);
+        return instance;
+    }
+
+    private static int load(File[] files, int index) {
         for (File file : files) {
             String name = file.getName();
             boolean isValidFile = name.endsWith(".sdf") ||
@@ -68,7 +94,7 @@ public class SDSVManager extends ICommandProgram {
                 }
             }
         }
-        return instance;
+        return index;
     }
 
     public void run(int thread) {
@@ -182,7 +208,7 @@ public class SDSVManager extends ICommandProgram {
                         } else if (annotatedCacheDir != null) {
                             File cacheFile = FileUtils.getSubFile(annotatedCacheDir, file.getName());
                             if (cacheFile.exists()) {
-                                FileUtils.copy(file.getPath(), cacheFile.getPath());
+//                                FileUtils.copy(file.getPath(), cacheFile.getPath());
                                 singleFileSDSVManager.annotated(true);
                                 return;
                             }
@@ -221,6 +247,10 @@ public class SDSVManager extends ICommandProgram {
                         File outputFile = new File(outputFileName);
                         if (!singleFileSDSVManager.isAnnotated()) {
                             singleFileSDSVManager.writeTo(outputFile);
+                        }else {
+                            if (!outputFile.exists()){
+                                outputFile = FileUtils.getSubFile(annotatedCacheDir,fileName);
+                            }
                         }
                         SourceOutputManager.attachAnnotatedFile(finalI, outputFile);
                     }
@@ -299,5 +329,8 @@ public class SDSVManager extends ICommandProgram {
         return this;
     }
 
-
+    public SDSVManager setAnnotatedCacheDir(File annotatedCacheDir) {
+        this.annotatedCacheDir = annotatedCacheDir;
+        return this;
+    }
 }

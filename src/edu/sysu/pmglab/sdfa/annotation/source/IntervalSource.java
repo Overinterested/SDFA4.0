@@ -148,4 +148,12 @@ public class IntervalSource implements Source {
         this.frame = frame;
         return this;
     }
+
+    public SourceIntervalTree getTree() {
+        return tree;
+    }
+    @Override
+    public void clearSourceContent() {
+        tree = null;
+    }
 }

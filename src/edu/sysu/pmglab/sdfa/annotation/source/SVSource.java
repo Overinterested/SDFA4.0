@@ -155,4 +155,13 @@ public class SVSource implements Source {
         this.frame = frame;
         return this;
     }
+
+    public SourceIntervalTree getTree() {
+        return tree;
+    }
+
+    @Override
+    public void clearSourceContent() {
+        tree = null;
+    }
 }

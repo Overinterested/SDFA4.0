@@ -45,7 +45,11 @@ import java.io.IOException;
         rule = @Rule(
                 counter = {
                         @Counter(item = {"--population-vcf", "--multiple-vcf", "--sv-mode"},
-                                rule = Counter.Type.EQUAL, count = 1)
+                                rule = Counter.Type.EQUAL, count = 1),
+                        @Counter(item = {"--control-dir", "-dir"},
+                                rule = Counter.Type.EQUAL, count = 1),
+                        @Counter(item = {"--case-dir", "--control-dir"},
+                                rule = Counter.Type.EQUAL, count = 2)
                 }
         )
 )
@@ -66,8 +70,14 @@ public class NAGFProgram extends ICommandProgram {
     int numOfLoadRefRNA = 500;
     @Option(names = {"-t", "--threads"}, type = FieldType.varInt32, validator = Int_1_RangeValidator.class)
     int threads = 4;
-    @Option(names = {"-dir", "-d"}, type = FieldType.file, required = true)
+    @Option(names = {"-dir", "-d"}, type = FieldType.file)
     File inputDir;
+    @Option(names = {"--case-dir", "-csd"}, type = FieldType.file)
+    File caseDir;
+    @Option(names = {"--control-dir", "-ctd"}, type = FieldType.file)
+    File control;
+    @Option(names = {"--annotated-cache-dir", "-acd"}, type = FieldType.file, required = false)
+    File annotatedCache;
     @Option(names = {"-o", "--output"}, type = FieldType.file, required = true)
     File outputDir;
     @Option(names = {"--genome-file"}, type = FieldType.file, required = true)
@@ -78,6 +88,7 @@ public class NAGFProgram extends ICommandProgram {
     String caseTag;
     @Option(names = {"--output-model", "-om"}, type = FieldType.string, defaultTo = "full")
     String outputModel = "full";
+
 
     public static void main(String[] args) throws IOException {
         //region init
@@ -92,7 +103,6 @@ public class NAGFProgram extends ICommandProgram {
         }
         // init
         int threads = nagfProgram.threads;
-        File inputDir = nagfProgram.inputDir;
         File outputDir = nagfProgram.outputDir;
         File genomeFile = nagfProgram.genomeFile;
         int numOfLoadRefRNA = options.value("--rna-batch");
@@ -105,13 +115,22 @@ public class NAGFProgram extends ICommandProgram {
         Workflow workflow = new Workflow(threads);
         //endregion
         //region pre-annotate SVs
-        new IndexedGeneAnnotation()
+        IndexedGeneAnnotation indexedGeneAnnotation = new IndexedGeneAnnotation()
                 .setMode(mode)
-                .setInputDir(inputDir)
                 .setOutputDir(outputDir)
                 .setGenomeFile(genomeFile)
-                .setThreads(threads)
-                .annotate();
+                .setThreads(threads);
+        if (options.passed("-d")) {
+            File inputDir = nagfProgram.inputDir;
+            indexedGeneAnnotation.setInputDir(inputDir);
+        } else {
+            indexedGeneAnnotation.setCaseDir(options.value("-csd"))
+                    .setControlDir(options.value("-ctd"));
+        }
+        if (options.passed("-acd")) {
+            indexedGeneAnnotation.setAnnotatedFilesCache(options.value("-acd"));
+        }
+        indexedGeneAnnotation.annotate();
         if (mode == NAGFMode.SV_Level) {
             return;
         }

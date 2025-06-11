@@ -8,6 +8,8 @@ import edu.sysu.pmglab.ccf.type.FieldType;
 import edu.sysu.pmglab.commandParser.CommandOptions;
 import edu.sysu.pmglab.commandParser.ICommandProgram;
 import edu.sysu.pmglab.commandParser.annotation.option.Option;
+import edu.sysu.pmglab.commandParser.annotation.rule.Counter;
+import edu.sysu.pmglab.commandParser.annotation.rule.Rule;
 import edu.sysu.pmglab.commandParser.annotation.usage.Parser;
 import edu.sysu.pmglab.commandParser.annotation.usage.UsageItem;
 import edu.sysu.pmglab.commandParser.validator.range.Int_1_RangeValidator;
@@ -43,7 +45,15 @@ import java.util.function.BiFunction;
         usage_item = {
                 @UsageItem(key = "API", value = "edu.sysu.pmglab.sdfa.command.AnnotationProgram"),
                 @UsageItem(key = "About", value = "Annotate SVs using a resource config file recording the corresponding type and path of each resource.")
-        }
+        },
+        rule = @Rule(
+                counter = {
+                        @Counter(item = {"--control-dir", "-dir"},
+                                rule = Counter.Type.EQUAL, count = 1),
+                        @Counter(item = {"--case-dir", "--control-dir"},
+                                rule = Counter.Type.EQUAL, count = 2)
+                }
+        )
 )
 public class AnnotationProgram extends ICommandProgram {
     @Option(names = "annotate", type = FieldType.NULL)
@@ -52,8 +62,12 @@ public class AnnotationProgram extends ICommandProgram {
     @Option(names = {"-t", "--threads"}, type = FieldType.varInt32, validator = Int_1_RangeValidator.class)
     int threads = 4;
 
-    @Option(names = {"-dir", "-d", "--dir"}, type = FieldType.file, required = true)
+    @Option(names = {"-dir", "-d", "--dir"}, type = FieldType.file)
     File inputDir;
+    @Option(names = {"--case-dir", "-csd"}, type = FieldType.file)
+    File caseDir;
+    @Option(names = {"--control-dir", "-ctd"}, type = FieldType.file)
+    File control;
 
     @Option(names = {"-o", "--output"}, type = FieldType.file, required = true)
     File outputDir;
@@ -82,14 +96,27 @@ public class AnnotationProgram extends ICommandProgram {
         // init
         int threads = options.value("-t");
         File outputDir = options.value("-o");
-        File inputDir = options.value("--dir");
+
         LiveFile config = LiveFile.of((File) options.value("--config"));
 
         // load and parse raw files to sdf files
         Workflow workflow = new Workflow(threads);
-        SDSVManager sdsvManager = Objects.requireNonNull(SDSVManager.of(inputDir)).setOutputDir(outputDir)
-                .setReadOption(SDFReadType.ANNOTATION)
-                .initAnnotationOutputDir();
+        SDSVManager sdsvManager;
+        if (options.passed("-d")){
+            File inputDir = options.value("--dir");
+            sdsvManager = Objects.requireNonNull(SDSVManager.of(inputDir)).setOutputDir(outputDir)
+                    .setReadOption(SDFReadType.ANNOTATION)
+                    .initAnnotationOutputDir();
+        }else {
+            File caseDir = options.value("--case-dir");
+            File controlDir = options.value("--control-dir");
+            sdsvManager = Objects.requireNonNull(SDSVManager.of(controlDir, caseDir)).setOutputDir(outputDir)
+                    .setReadOption(SDFReadType.ANNOTATION)
+                    .initAnnotationOutputDir();
+        }
+        if (options.passed("-acd")){
+            sdsvManager.setAnnotatedCacheDir(options.value("-acd"));
+        }
         List<Pipeline> pipelines = sdsvManager.parseToSDFFileTask();
         for (Pipeline pipeline : pipelines) {
             workflow.addTask(pipeline);
@@ -194,6 +221,7 @@ public class AnnotationProgram extends ICommandProgram {
             // sliding windows
             SourceOutputManager.getInstance().partialOutput();
         }
+        SourceManager.getManager().clearSourceContent();
         CCFTable.gc();
     }
 

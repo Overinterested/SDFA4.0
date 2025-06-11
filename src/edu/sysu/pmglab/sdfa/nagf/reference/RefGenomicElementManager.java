@@ -39,6 +39,7 @@ public class RefGenomicElementManager {
     protected int numOfLoadRefRNA = 500;
     protected WriterStream writerStream;
     protected List<RefRNAElement> loadedRNAList;
+    protected TObjectIntHashMap<String> geneNameRNACountMap;
     protected AbstractOutputNumericFeature outputNumericFeatureInstance;
 
     protected static RefGenomicElementManager instance;
@@ -64,8 +65,6 @@ public class RefGenomicElementManager {
             // closed or has read all
             return null;
         }
-        TObjectIntHashMap<String> geneNameRNACountMap = geneLevel ?
-                new TObjectIntHashMap<>(maxRefIndex - minRefIndex, 0.75f, -1) : null;
         int trueMaxRefIndex = Math.min(maxRefIndex, numOfRecords);
         // load new reference transcripts
         int i;
@@ -81,7 +80,10 @@ public class RefGenomicElementManager {
         }
         if (geneLevel) {
             while (geneNameRNACountMap.size() != 0) {
-                reader.read(record);
+                boolean read = reader.read(record);
+                if (!read) {
+                    break;
+                }
                 // reuse the instance created before
                 if (loadedRNAList.size() <= i) {
                     loadedRNAList.add(new RefRNAElement(sizeOfSample));
@@ -108,11 +110,12 @@ public class RefGenomicElementManager {
     }
 
     public void processForGeneLevelLoad(SourceRNARecord rnaRecord, TObjectIntHashMap<String> geneNameRNACountMap) {
-        if (rnaRecord.getNumOfRNAForGene() != 1) {
+        int numOfRNAForGene = rnaRecord.getNumOfRNAForGene();
+        if (numOfRNAForGene != 1) {
             String nameOfGene = rnaRecord.getNameOfGene();
             int currNumOfRNAForGene = geneNameRNACountMap.get(nameOfGene);
             if (currNumOfRNAForGene == -1) {
-                geneNameRNACountMap.put(nameOfGene, currNumOfRNAForGene);
+                geneNameRNACountMap.put(nameOfGene, numOfRNAForGene);
             } else if (currNumOfRNAForGene == rnaRecord.getIndexOfRNA() + 1) {
                 geneNameRNACountMap.remove(nameOfGene);
             }
@@ -145,6 +148,9 @@ public class RefGenomicElementManager {
      */
     public RefGenomicElementManager setNumOfLoadRefRNA(int numOfLoadRefRNA) {
         this.numOfLoadRefRNA = numOfLoadRefRNA;
+        if (geneLevel) {
+            geneNameRNACountMap = new TObjectIntHashMap<>(2 * numOfLoadRefRNA, 0.75f, -1);
+        }
         return this;
     }
 

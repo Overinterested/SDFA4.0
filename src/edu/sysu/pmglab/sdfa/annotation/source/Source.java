@@ -46,4 +46,6 @@ public interface Source extends AnnotateTask {
     Source setSourceID(int sourceID);
 
     Source setFrame(IntervalSourceOutputFrame frame);
+
+    void clearSourceContent();
 }

@@ -16,9 +16,9 @@ import java.io.IOException;
 public class AnnotationTest {
     public static void main(String[] args) throws IOException, REngineException, InterruptedException {
         CCFTable.gc();
-        String annotationCML = "annotate --config /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/data/config.txt " +
-                "-t 4 -d /Users/wenjiepeng/Desktop/SDFA_4.0/test/vcf " +
-                "-o /Users/wenjiepeng/Desktop/SDFA_4.0/test/annotation/res";
+        String annotationCML = "annotate --config /Users/wenjiepeng/Desktop/SDFA_4.0/data/config.txt " +
+                "-t 4 -d /Users/wenjiepeng/Desktop/SDFA_4.0/data/normal/sdf/raw/sdf " +
+                "-o /Users/wenjiepeng/Desktop/SDFA_4.0/data/normal/sdf/raw/annotation";
         SDFAProgram.main(annotationCML.split(" "));
     }
 }

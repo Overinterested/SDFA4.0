@@ -169,10 +169,10 @@ public class AnnotatedSDFManager {
                 // drop SV whose annotation indexes are less than current reference index, minRefIndex
                 if (annotationIndexes.fastGet(1) < minRefIndex) {
                     sdsvCache.popFirst();
+                    size--;
                 } else {
                     return;
                 }
-                size--;
             }
         }
 
