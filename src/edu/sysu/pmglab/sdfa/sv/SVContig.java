@@ -28,7 +28,6 @@ public class SVContig {
 
     //    private final ByteListBox contigNamesBox = new ByteListBox();
     public static final String SDF_CONTIG_NAMES = "$CONTIG_NAMES";
-    private final IntIntervalBox contigRangeBox = new IntIntervalBox();
     private static final NamedSet<Chromosome> HUMAN_CONTIG = new NamedSet<>();
 
     static {

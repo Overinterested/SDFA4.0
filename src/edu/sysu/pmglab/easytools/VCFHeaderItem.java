@@ -18,8 +18,8 @@ public enum VCFHeaderItem {
     FORMAT("FORMAT" ),
     GT("GT" ),;
 
-    String itemString;
     Bytes itemBytes;
+    String itemString;
 
     VCFHeaderItem(String itemString) {
         this.itemString = itemString;

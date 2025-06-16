@@ -34,8 +34,8 @@ public class RefGenomicElementManager {
     protected CCFReader reader;
 
     protected int sizeOfSample;
-    protected boolean geneLevel;
     protected File outputFilePath;
+    protected boolean geneLevel = true;
     protected int numOfLoadRefRNA = 500;
     protected WriterStream writerStream;
     protected List<RefRNAElement> loadedRNAList;
@@ -75,7 +75,9 @@ public class RefGenomicElementManager {
                 loadedRNAList.add(new RefRNAElement(sizeOfSample));
             }
             SourceRNARecord rnaRecord = SourceRNARecord.load(record);
-            processForGeneLevelLoad(rnaRecord, geneNameRNACountMap);
+            if (geneLevel) {
+                processForGeneLevelLoad(rnaRecord, geneNameRNACountMap);
+            }
             loadedRNAList.fastGet(i).setRnaRecord(rnaRecord);
         }
         if (geneLevel) {
@@ -95,16 +97,6 @@ public class RefGenomicElementManager {
                 trueMaxRefIndex++;
             }
         }
-//        //region clear expired objects
-//        if (trueMaxRefIndex != maxRefIndex) {
-//            List<RefRNAElement> lastList = new List<>();
-//            int numOfValidIndex = trueMaxRefIndex - minRefIndex;
-//            for (int j = 0; j < numOfValidIndex; j++) {
-//                lastList.add(loadedRNAList.fastGet(j));
-//            }
-//            loadedRNAList.clear();
-//            loadedRNAList.addAll(lastList);
-//        }
         //endregion
         return new IntInterval(minRefIndex, trueMaxRefIndex);
     }

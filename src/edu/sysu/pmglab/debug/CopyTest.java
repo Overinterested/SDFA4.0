@@ -1,8 +1,12 @@
 package edu.sysu.pmglab.debug;
 
 import edu.sysu.pmglab.sdfa.command.PedBasedSDFSelectionProgram;
+import gnu.trove.iterator.TIntIterator;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * @author Wenjie Peng
@@ -11,9 +15,18 @@ import java.io.IOException;
  */
 public class CopyTest {
     public static void main(String[] args) throws IOException {
-        String cml = "select -f /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf/sdf/test.ped " +
-                "-d /Users/wenjiepeng/Desktop/SDFA_4.0/UKB/test_sdf/sdf --count " +
-                "-o /Users/wenjiepeng/Desktop/SDFA_4.0/UKB";
-        PedBasedSDFSelectionProgram.main(cml.split(" "));
+        TIntSet a = new TIntHashSet();
+        Random random = new Random(1);
+        for (int i = 0; i < 10; i++) {
+            a.add(random.nextInt(1000));
+        }
+        a.add(1);
+        a.add(213);
+        a.add(141);
+        TIntIterator iterator = a.iterator();
+        while (iterator.hasNext()){
+            int next = iterator.next();
+            System.out.println(next);
+        }
     }
 }

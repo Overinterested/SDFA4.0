@@ -152,9 +152,6 @@ public class MergedSVCompare {
                     }
 
                 }
-                if (!flag && type1 == SVTypeSign.getByName("INS")){
-                    int a = 1;
-                }
                 cache.clear();
             }
             reader.close();

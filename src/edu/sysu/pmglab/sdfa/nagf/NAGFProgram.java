@@ -1,6 +1,7 @@
 package edu.sysu.pmglab.sdfa.nagf;
 
 import ch.qos.logback.classic.Logger;
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import edu.sysu.pmglab.LogBackOptions;
 import edu.sysu.pmglab.ccf.type.FieldType;
 import edu.sysu.pmglab.commandParser.CommandOptions;
@@ -10,15 +11,14 @@ import edu.sysu.pmglab.commandParser.annotation.rule.Counter;
 import edu.sysu.pmglab.commandParser.annotation.rule.Rule;
 import edu.sysu.pmglab.commandParser.annotation.usage.Parser;
 import edu.sysu.pmglab.commandParser.annotation.usage.UsageItem;
-import edu.sysu.pmglab.commandParser.validator.range.Int_0_RangeValidator;
 import edu.sysu.pmglab.commandParser.validator.range.Int_1_RangeValidator;
 import edu.sysu.pmglab.container.interval.IntInterval;
 import edu.sysu.pmglab.container.list.List;
 import edu.sysu.pmglab.executor.ITask;
+import edu.sysu.pmglab.executor.Pipeline;
 import edu.sysu.pmglab.executor.Workflow;
 import edu.sysu.pmglab.io.FileUtils;
 import edu.sysu.pmglab.progressbar.ProgressBar;
-import edu.sysu.pmglab.sdfa.annotation.source.GenomeSource;
 import edu.sysu.pmglab.sdfa.annotation.source.SourceManager;
 import edu.sysu.pmglab.sdfa.mode.SDFReadType;
 import edu.sysu.pmglab.sdfa.nagf.annotate.IndexedGeneAnnotation;
@@ -47,9 +47,7 @@ import java.io.IOException;
                         @Counter(item = {"--population-vcf", "--multiple-vcf", "--sv-mode"},
                                 rule = Counter.Type.EQUAL, count = 1),
                         @Counter(item = {"--control-dir", "-dir"},
-                                rule = Counter.Type.EQUAL, count = 1),
-                        @Counter(item = {"--case-dir", "--control-dir"},
-                                rule = Counter.Type.EQUAL, count = 2)
+                                rule = Counter.Type.EQUAL, count = 1)
                 }
         )
 )
@@ -141,11 +139,18 @@ public class NAGFProgram extends ICommandProgram {
         AbstractOutputNumericFeature.setAffectedNumericConvertorName(name);
         AffectedNumericConvertor.add(name, new AffectedStringConvertor());
         //endregion
-        AnnotatedSDFManager sdsvGenomicIndexManager = AnnotatedSDFManager.init(
+        List<Pipeline> pipelines = AnnotatedSDFManager.initTasks(
                 FileUtils.getSubFile(outputDir, "annotation"),
+                options.value("-acd"),
                 SDFReadType.ANNOTATION_GT
         );
-        // load reference and map
+        for (Pipeline pipeline : pipelines) {
+            workflow.addTask(pipeline);
+        }
+        workflow.execute();
+        workflow.clearTasks();
+        AnnotatedSDFManager sdsvGenomicIndexManager = AnnotatedSDFManager.getInstance();
+                // load reference and map
         genomeFile = new File(SourceManager.getManager().getSourceByIndex(0).getFile().toString());
         RefGenomicElementManager refGenomicElementManager = RefGenomicElementManager.init(
                 genomeFile, outputDir, geneLevel,

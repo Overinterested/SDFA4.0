@@ -15,6 +15,7 @@ import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * @author Wenjie Peng
@@ -47,15 +48,15 @@ public class RefRNAElement {
      * add related sdsv index in the corresponding file cache
      *
      * @param fileID
-     * @param overlappedIndexInCache
+     * @param indexOfSDSV
      */
-    public void updateRelatedSDSVIndex(int fileID, int overlappedIndexInCache) {
+    public void updateRelatedSDSVIndex(int fileID, int indexOfSDSV) {
         updateFileIndex.add(fileID);
         int[] intInterval = this.overlappedSDSVRangeInDifferentSDSVCache.fastGet(fileID);
         if (intInterval == null || intInterval[0] == -1) {
-            this.overlappedSDSVRangeInDifferentSDSVCache.set(fileID, new int[]{overlappedIndexInCache, overlappedIndexInCache});
+            this.overlappedSDSVRangeInDifferentSDSVCache.set(fileID, new int[]{indexOfSDSV, indexOfSDSV});
         } else {
-            intInterval[1] = overlappedIndexInCache;
+            intInterval[1] = indexOfSDSV;
         }
     }
 
@@ -110,12 +111,13 @@ public class RefRNAElement {
     public void updateNumericValuesForMultiVCF(RNAAffectedCalculator rnaAffectedCalculator, List<float[]> numericValues) {
         int startIndex, endIndex;
         TIntIterator iterator = updateFileIndex.iterator();
+        AnnotatedSDFManager instance = AnnotatedSDFManager.getInstance();
         while (iterator.hasNext()) {
             int fileID = iterator.next();
             int[] range = overlappedSDSVRangeInDifferentSDSVCache.fastGet(fileID);
             startIndex = range[0];
             endIndex = range[1];
-            List<ISDSV> sdsvByFileID = AnnotatedSDFManager.getInstance().getSDSVByFileID(fileID);
+            List<ISDSV> sdsvByFileID = instance.getSDSVByFileID(fileID);
             float[] numericValueInFile = numericValues.fastGet(fileID);
             for (int svIndex = startIndex; svIndex <= endIndex; svIndex++) {
                 ISDSV sdsv = sdsvByFileID.fastGet(svIndex);

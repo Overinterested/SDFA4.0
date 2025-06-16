@@ -5,9 +5,7 @@ import edu.sysu.pmglab.commandParser.ICommandProgram;
 import edu.sysu.pmglab.container.indexable.LinkedSet;
 import edu.sysu.pmglab.container.interval.IntInterval;
 import edu.sysu.pmglab.container.list.List;
-import edu.sysu.pmglab.executor.ITask;
-import edu.sysu.pmglab.executor.Pipeline;
-import edu.sysu.pmglab.executor.Workflow;
+import edu.sysu.pmglab.executor.*;
 import edu.sysu.pmglab.io.FileUtils;
 import edu.sysu.pmglab.io.file.LiveFile;
 import edu.sysu.pmglab.progressbar.ProgressBar;
@@ -43,7 +41,7 @@ public class SDSVManager extends ICommandProgram {
     }
 
 
-    public static  SDSVManager of(String controlDir, String caseDir){
+    public static SDSVManager of(String controlDir, String caseDir) {
         return of(new File(controlDir), new File(caseDir));
     }
 
@@ -144,10 +142,12 @@ public class SDSVManager extends ICommandProgram {
                     {
                         LiveFile sdfFile = null;
                         SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
-                        if (singleFileSDSVManager.needParse()) {
+                        File outputFile = new File(sdfOutputDir + File.separator + singleFileSDSVManager.getFile().getName() + ".sdf");
+                        if (outputFile.exists()) {
+                            sdfFile = LiveFile.of(outputFile);
+                        } else if (singleFileSDSVManager.needParse()) {
                             VCFInstance vcfInstance = new VCFInstance(singleFileSDSVManager.getFile(), callingType);
                             SDSVConversionManager sdsvConversionManager = new SDSVConversionManager();
-                            File outputFile = new File(sdfOutputDir + File.separator + singleFileSDSVManager.getFile().getName() + ".sdf");
                             sdsvConversionManager.initWriter(outputFile);
                             vcfInstance.setConversionFromSV2Record(sdsvConversionManager)
                                     .setSVFilterManager(filterManager)
@@ -160,18 +160,15 @@ public class SDSVManager extends ICommandProgram {
                                     return;
                                 }
                             }
-                            if (!silent && bar != null) {
-                                bar.step(1);
-                            }
                             if (outputFile.exists()) {
                                 sdfFile = LiveFile.of(outputFile);
                             }
                             vcfInstance = null;
                         } else {
                             sdfFile = singleFileSDSVManager.getFile();
-                            if (!silent && bar != null) {
-                                bar.step(1);
-                            }
+                        }
+                        if (!silent && bar != null) {
+                            bar.step(1);
                         }
                         if (sdfFile != null) {
                             singleFileSDSVManager.setSdfFile(new File(sdfFile.getPath()));
@@ -180,9 +177,11 @@ public class SDSVManager extends ICommandProgram {
                     }
             ));
         }
-        Pipeline parsePipeline = new Pipeline(parseTasks);
-        tasks.add(parsePipeline);
+        for (ITask parseTask : parseTasks) {
+            tasks.add(new Pipeline(parseTask));
+        }
         if (!silent) {
+            tasks.add(Pipeline.WAIT_FOR_ALL);
             tasks.add(new Pipeline(true, ((status, context) -> {
                 if (bar != null) {
                     bar.close();
@@ -247,9 +246,10 @@ public class SDSVManager extends ICommandProgram {
                         File outputFile = new File(outputFileName);
                         if (!singleFileSDSVManager.isAnnotated()) {
                             singleFileSDSVManager.writeTo(outputFile);
-                        }else {
-                            if (!outputFile.exists()){
-                                outputFile = FileUtils.getSubFile(annotatedCacheDir,fileName);
+                            singleFileSDSVManager.isAnnotated();
+                        } else {
+                            if (!outputFile.exists()) {
+                                outputFile = FileUtils.getSubFile(annotatedCacheDir, fileName);
                             }
                         }
                         SourceOutputManager.attachAnnotatedFile(finalI, outputFile);

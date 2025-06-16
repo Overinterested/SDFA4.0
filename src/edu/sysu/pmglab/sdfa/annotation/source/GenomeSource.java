@@ -65,6 +65,7 @@ public class GenomeSource implements Source {
                 max = Math.max(pointer, max);
             }
             item.updateAnnotPointer(sourceID, min, max);
+            overlaps.clear();
         }
     }
 

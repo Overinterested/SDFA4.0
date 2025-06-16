@@ -2,16 +2,25 @@ package edu.sysu.pmglab.sdfa.nagf;
 
 import edu.sysu.pmglab.LogBackOptions;
 import edu.sysu.pmglab.ccf.CCFTable;
+import edu.sysu.pmglab.container.indexable.LinkedSet;
 import edu.sysu.pmglab.container.list.IntList;
 import edu.sysu.pmglab.container.list.List;
+import edu.sysu.pmglab.executor.Context;
 import edu.sysu.pmglab.executor.ITask;
+import edu.sysu.pmglab.executor.Pipeline;
+import edu.sysu.pmglab.executor.Status;
+import edu.sysu.pmglab.io.FileUtils;
 import edu.sysu.pmglab.sdfa.SDFReader;
 import edu.sysu.pmglab.sdfa.mode.SDFReadType;
 import edu.sysu.pmglab.sdfa.nagf.reference.RefGenomicElementManager;
 import edu.sysu.pmglab.sdfa.sv.sdsv.ISDSV;
+import edu.sysu.pmglab.sdfa.sv.sdsv.container.SDSVManager;
+import edu.sysu.pmglab.sdfa.sv.sdsv.container.SingleFileSDSVManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Wenjie Peng
@@ -25,41 +34,55 @@ public class AnnotatedSDFManager {
 
     /**
      * collect all annotated sdf files
+     *
      * @param annotatedDir
      * @param readerMode
      * @return
-     * @throws IOException
      */
-    public static AnnotatedSDFManager init(File annotatedDir, SDFReadType readerMode) throws IOException {
+    public static List<Pipeline> initTasks(File annotatedDir, File annotatedCacheDir, SDFReadType readerMode) {
         if (instance != null) {
-            return instance;
+            return List.EMPTY();
         }
-        int index = 0;
-        File[] files = annotatedDir.listFiles();
-        if (files == null || files.length == 0) {
-            LogBackOptions.getRootLogger().error("Please check whether " + annotatedDir + " contains annotated sdf files.");
-            throw new UnsupportedOperationException();
-        }
+        List<Pipeline> tasks = new List<>();
+        AtomicInteger cacheCount = new AtomicInteger(0);
+        instance = new AnnotatedSDFManager();
         List<SDSVGenomicIndexedAnnotation> sdsvGenomicIndexedAnnotations = new List<>();
-        AnnotatedSDFManager annotatedSDFManager = new AnnotatedSDFManager();
-        for (File file : files) {
-            if (file.getName().endsWith(".sdf")) {
-                SDFReader sdfReader = new SDFReader(file, readerMode);
-                sdsvGenomicIndexedAnnotations.add(new SDSVGenomicIndexedAnnotation(index++, sdfReader));
+        LinkedSet<SingleFileSDSVManager> fileManagers = SDSVManager.getInstance().getFileManagers();
+        int size = fileManagers.size();
+        for (int i = 0; i < size; i++) {
+            int finalI = i;
+            tasks.add(new Pipeline((status, context) -> {
+                File sdfFile = fileManagers.valueOf(finalI).getSdfFile();
+                String name = sdfFile.getName();
+                File annotatedLiveFile = FileUtils.getSubFile(annotatedDir, name);
+                if (!annotatedLiveFile.exists()) {
+                    annotatedLiveFile = FileUtils.getSubFile(annotatedCacheDir, name);
+                    cacheCount.incrementAndGet();
+                }
+                SDFReader sdfReader = new SDFReader(annotatedLiveFile, readerMode);
+                synchronized (sdsvGenomicIndexedAnnotations) {
+                    sdsvGenomicIndexedAnnotations.add(new SDSVGenomicIndexedAnnotation(finalI, sdfReader));
+                }
                 sdfReader.close();
-                CCFTable.gc();
-            }
+            }));
         }
-        annotatedSDFManager.fileIndexedAnnotation = sdsvGenomicIndexedAnnotations;
-        instance = annotatedSDFManager;
-        return instance;
+        tasks.add(Pipeline.WAIT_FOR_ALL);
+        tasks.add(new Pipeline((status, context) -> {
+            sdsvGenomicIndexedAnnotations.sort(SDSVGenomicIndexedAnnotation::compareTo);
+            instance.fileIndexedAnnotation = sdsvGenomicIndexedAnnotations;
+            if (cacheCount.get() != 0) {
+                LogBackOptions.getRootLogger().info("Collect " + cacheCount.get() + " annotated files in the cached annotated repository.");
+            }
+            CCFTable.gc();
+        }));
+        return tasks;
     }
 
     public List<ISDSV> getSDSVByFileID(int fileID) {
         return fileIndexedAnnotation.fastGet(fileID).sdsvCache;
     }
 
-    static class SDSVGenomicIndexedAnnotation {
+    static class SDSVGenomicIndexedAnnotation implements Comparable<SDSVGenomicIndexedAnnotation> {
         final int fileID;
         long startPoint = 0;
         List<ISDSV> sdsvCache;
@@ -76,6 +99,7 @@ public class AnnotatedSDFManager {
         /**
          * continue loading the sdsv from the last start pointer until the start sdsv annotation index is larger than or equal to maxRefIndex
          * at the same time, the related sdsv is registered into the related sdsv index cache of responding rna elements
+         *
          * @param minRefIndex min reference rna index
          * @param maxRefIndex max reference rna index
          * @return ITask object
@@ -87,26 +111,26 @@ public class AnnotatedSDFManager {
                 reader.open();
                 reader.limit(startPoint, reader.numOfRecords());
 
-                int index = 0;
+                int indexOfSDSV = 0;
                 int size = sdsvCache.size();
                 if (size != 0) {
                     for (int i = 0; i < size; i++) {
                         IntList annotationIndexes = sdsvCache.fastGet(i).getAnnotationIndexes();
-                        int updateFlag = updateRefRNARelatedSDSV(annotationIndexes, index++, minRefIndex, maxRefIndex);
+                        int updateFlag = updateRefRNARelatedSDSV(annotationIndexes, indexOfSDSV++, minRefIndex, maxRefIndex);
                         // no overlap with [minRefIndex, maxRefIndex)
                         if (updateFlag == 0) {
                             return;
                         }
                         // drop reason: all the sdsv in the cache has annotation indexes, which can be proofed in the following for loop
 //                        if (updateFlag == -1){
-//                            index--;
+//                            indexOfSDSV--;
 //                        }
                     }
                 }
                 ISDSV sdsv;
                 while ((sdsv = reader.read()) != null) {
                     IntList annotationIndexes = sdsv.getAnnotationIndexes();
-                    int updateFlag = updateRefRNARelatedSDSV(annotationIndexes, index++, minRefIndex, maxRefIndex);
+                    int updateFlag = updateRefRNARelatedSDSV(annotationIndexes, indexOfSDSV++, minRefIndex, maxRefIndex);
                     // no overlap with [minRefIndex, maxRefIndex)
                     if (updateFlag == 0) {
                         startPoint = reader.tell();
@@ -116,9 +140,9 @@ public class AnnotatedSDFManager {
                     if (updateFlag == 1) {
                         // has update
                         sdsvCache.add(sdsv);
-                    }else {
+                    } else {
                         // no annotation
-                        index--;
+                        indexOfSDSV--;
                     }
                 }
             });
@@ -132,12 +156,12 @@ public class AnnotatedSDFManager {
          * update reference RNA with related SDSV indexes
          *
          * @param annotationIndexes sdsv related SV
-         * @param index             corresponding sdsv index in the cache list
+         * @param indexOfSDSV             corresponding sdsv index in the cache list
          * @param minRefIndex       collected min reference pointer index
          * @param maxRefIndex       collected max reference pointer index
          * @return -1 represents no annotation, 0 represents no overlap, 1 represents overlapping and having been updated
          */
-        private int updateRefRNARelatedSDSV(IntList annotationIndexes, int index,
+        private int updateRefRNARelatedSDSV(IntList annotationIndexes, int indexOfSDSV,
                                             int minRefIndex, int maxRefIndex) {
             // no annotation
             if (annotationIndexes.isEmpty()) {
@@ -153,13 +177,14 @@ public class AnnotatedSDFManager {
             RefGenomicElementManager.getInstance().updateRelatedSDSVInRefRNA(
                     Math.max(minRefIndex, relatedStartRefIndexInSV) - minRefIndex,
                     Math.min(maxRefIndex - 1, relatedEndRefIndexInSV) - minRefIndex,
-                    fileID, index
+                    fileID, indexOfSDSV
             );
             return 1;
         }
 
         /**
          * drop SV whose annotation indexes are less than current reference index, minRefIndex
+         *
          * @param minRefIndex
          */
         protected void dropTopNoAnnotationSDSVs(int minRefIndex) {
@@ -179,10 +204,16 @@ public class AnnotatedSDFManager {
         public SDFReader getReader() {
             return reader;
         }
+
+        @Override
+        public int compareTo(SDSVGenomicIndexedAnnotation o) {
+            return Integer.compare(fileID, o.fileID);
+        }
     }
 
     /**
      * for all sdf file, the related sdsv is registered into the related sdsv index cache of responding rna elements
+     *
      * @param minRefIndex
      * @param maxRefIndex
      * @return a list tasks for all sdf files
@@ -210,11 +241,11 @@ public class AnnotatedSDFManager {
         return fileIndexedAnnotation.size();
     }
 
-    public SDFReader getReaderByIndex(int index){
+    public SDFReader getReaderByIndex(int index) {
         return fileIndexedAnnotation.fastGet(index).reader;
     }
 
-    public int sizeOfAnnotationFile(){
+    public int sizeOfAnnotationFile() {
         return fileIndexedAnnotation.size();
     }
 }

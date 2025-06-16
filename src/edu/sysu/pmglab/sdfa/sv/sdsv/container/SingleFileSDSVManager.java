@@ -1,5 +1,6 @@
 package edu.sysu.pmglab.sdfa.sv.sdsv.container;
 
+import edu.sysu.pmglab.bytecode.ByteStream;
 import edu.sysu.pmglab.ccf.CCFTable;
 import edu.sysu.pmglab.ccf.CCFWriter;
 import edu.sysu.pmglab.ccf.meta.CCFMeta;
@@ -29,9 +30,9 @@ public class SingleFileSDSVManager {
     File sdfFile;
     SDFReader reader;
     CCFWriter writer;
-    boolean annotated;
     final LiveFile file;
     SDFReadType readerMode;
+    boolean annotated = false;
     LinkedSet<String> individuals;
     DynamicIndexableMap<String, List<ISDSV>> recordsOfContigs;
 
@@ -62,7 +63,7 @@ public class SingleFileSDSVManager {
 
     public void load() throws IOException {
         int contigIndex = -1;
-        reader.open();
+        getReader().open();
         ISDSV sv;
         List<ISDSV> svs = new List<>();
         String contigName;
@@ -81,7 +82,7 @@ public class SingleFileSDSVManager {
 
     public void writeTo(File file) throws IOException {
         IRecord record;
-        reader.reopenAllFields();
+        getReader().reopenAllFields();
         BoxRecord tmpRecord = reader.getReader().getRecord();
         writer = CCFWriter.setOutput(file).addFields(SDFReadType.FULL.getReaderMode().getMandatoryFields()).instance();
         int index = tmpRecord.indexOf(SDFHeader.ANNOTATION_INDEX_GROUP.getMetas().getField(0));
@@ -105,6 +106,8 @@ public class SingleFileSDSVManager {
         writer.close();
         writer = null;
         CCFTable.gc();
+        ByteStream.getThreadInstance().clear();
+        reader.getReaderOption().getSDFTable().getMeta().clear();
     }
 
     public void clear() {

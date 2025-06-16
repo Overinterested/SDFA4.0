@@ -110,17 +110,9 @@ public class TranscriptCalculator {
                 } else {
                     // non-coding rna
                     for (int i = 0; i < numOfExon; i++) {
-                        try {
-                            indexableTranscriptRegion.add(new Exon(exons[2 * i], exons[2 * i + 1], i));
-                        } catch (Exception e) {
-                            int a = 1;
-                        }
+                        indexableTranscriptRegion.add(new Exon(exons[2 * i], exons[2 * i + 1], i));
                         if (i != numOfExon - 1) {
-                            try {
-                                indexableTranscriptRegion.add(new Intro(exons[2 * i + 1], exons[2 * i + 2], i));
-                            } catch (Exception e) {
-                                int a = 1;
-                            }
+                            indexableTranscriptRegion.add(new Intro(exons[2 * i + 1], exons[2 * i + 2], i));
                         }
                     }
                 }
@@ -261,12 +253,13 @@ public class TranscriptCalculator {
         }
         for (int i = 0; i < 7; i++) {
             cache[i] = lenOfRegions[i] != 0 ? overlapLen[i] / (float) lenOfRegions[i] : 0;
-            if (cache[i]>=1f){
+            if (cache[i] >= 1f) {
                 cache[i] = 1f;
             }
         }
         return cache;
     }
+
     public float[] locateProportion(List<TranscriptRegion> overlaps, ISDSV sv) {
         return locateProportion(overlaps, sv, new float[7]);
     }
@@ -668,7 +661,7 @@ public class TranscriptCalculator {
         }
     }
 
-    public static void parseOverlapFloatList(float[] overlap, ByteStream cache){
+    public static void parseOverlapFloatList(float[] overlap, ByteStream cache) {
         boolean existLast = false;
         for (int i = 0; i < overlap.length; i++) {
             if (overlap[i] != 0) {

@@ -49,9 +49,7 @@ import java.util.function.BiFunction;
         rule = @Rule(
                 counter = {
                         @Counter(item = {"--control-dir", "-dir"},
-                                rule = Counter.Type.EQUAL, count = 1),
-                        @Counter(item = {"--case-dir", "--control-dir"},
-                                rule = Counter.Type.EQUAL, count = 2)
+                                rule = Counter.Type.EQUAL, count = 1)
                 }
         )
 )
@@ -78,11 +76,15 @@ public class AnnotationProgram extends ICommandProgram {
     @Option(names = {"--annotated-cache-dir", "-acd"}, type = FieldType.file, required = false)
     File annotatedCache;
 
+    @Option(names = {"--no-output"}, type = FieldType.NULL)
+    Object noOutput;
+
     static boolean output = true;
 
     private static final HashMap<String, BiFunction<ISDSV, IRecord, Boolean>> furthAnnotateFunctionList = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
+        System.setProperty("ccf.buffer.size", "1");
         Logger logger = LogBackOptions.getRootLogger();
 
         AnnotationProgram program = new AnnotationProgram();
@@ -183,7 +185,7 @@ public class AnnotationProgram extends ICommandProgram {
             loadTasks.clear();
             // annotate
             List<ITask> annotateTasks = sourceManager.annotateTask(startFileIndex, endFileIndex);
-            if (annotateTasks != null) {
+            if (annotateTasks != null && !annotateTasks.isEmpty()) {
                 tasks = annotateTasks.toArray(new ITask[0]);
                 for (ITask task : tasks) {
                     workflow.addTask(task);
@@ -215,6 +217,9 @@ public class AnnotationProgram extends ICommandProgram {
             index++;
         }
         // start output
+        if (options.passed("--no-output")){
+            output = false;
+        }
         if (output) {
             LogBackOptions.getRootLogger().info("Start output annotation results.");
             SourceOutputManager.switchToWrite(SDFReadType.ANNOTATION);
