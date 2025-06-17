@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class NGAATest {
     public static void main(String[] args) throws IOException {
-        String s = "--multiple-vcf --gene-level -t 10 " +
+        String s = "--multiple-vcf --gene-level -t 8 " +
                 "--case-dir /Users/wenjiepeng/Desktop/SDFA_4.0/data/Glaucoma/cuteSV/sdf/raw/sdf " +
                 "--control-dir /Users/wenjiepeng/Desktop/SDFA_4.0/data/Exophthalmos/cuteSV/sdf/raw/sdf " +
 //                "-acd /Users/wenjiepeng/Desktop/SDFA_4.0/data/annotation_cache/raw " +

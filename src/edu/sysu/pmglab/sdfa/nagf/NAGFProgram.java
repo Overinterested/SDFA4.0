@@ -107,7 +107,7 @@ public class NAGFProgram extends ICommandProgram {
         NAGFMode mode = options.passed("--sv-mode") ? NAGFMode.SV_Level :
                 options.passed("--population-vcf") ? NAGFMode.One_Population_VCF : NAGFMode.Multi_VCF;
         boolean populationVCFMode = options.passed("--population-vcf");
-        boolean geneLevel = options.passed("--gene-level");
+        boolean geneLevel = !options.passed("--rna-level");
         NAGFGenomeSourceOutput.geneLevel(geneLevel);
         outputDir.mkdirs();
         Workflow workflow = new Workflow(threads);
@@ -150,7 +150,7 @@ public class NAGFProgram extends ICommandProgram {
         workflow.execute();
         workflow.clearTasks();
         AnnotatedSDFManager sdsvGenomicIndexManager = AnnotatedSDFManager.getInstance();
-                // load reference and map
+        // load reference and map
         genomeFile = new File(SourceManager.getManager().getSourceByIndex(0).getFile().toString());
         RefGenomicElementManager refGenomicElementManager = RefGenomicElementManager.init(
                 genomeFile, outputDir, geneLevel,
@@ -162,7 +162,7 @@ public class NAGFProgram extends ICommandProgram {
         ProgressBar bar = new ProgressBar.Builder()
                 .setTextRenderer("Numeric annotation speed", "transcripts")
                 .build();
-        int minRefIndex, maxRefIndex = numOfLoadRefRNA;
+        int minRefIndex, maxRefIndex = 0;
         while (true) {
             // load reference
             minRefIndex = maxRefIndex;

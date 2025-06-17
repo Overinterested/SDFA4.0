@@ -142,8 +142,11 @@ public class SDSVManager extends ICommandProgram {
                     {
                         LiveFile sdfFile = null;
                         SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
-                        File outputFile = new File(sdfOutputDir + File.separator + singleFileSDSVManager.getFile().getName() + ".sdf");
-                        if (outputFile.exists()) {
+                        String name = singleFileSDSVManager.getFile().getName();
+                        File outputFile = new File(sdfOutputDir + File.separator + name + ".sdf");
+                        if (name.endsWith(".sdf")) {
+                            sdfFile = singleFileSDSVManager.getFile();
+                        } else if (outputFile.exists()) {
                             sdfFile = LiveFile.of(outputFile);
                         } else if (singleFileSDSVManager.needParse()) {
                             VCFInstance vcfInstance = new VCFInstance(singleFileSDSVManager.getFile(), callingType);
@@ -164,8 +167,6 @@ public class SDSVManager extends ICommandProgram {
                                 sdfFile = LiveFile.of(outputFile);
                             }
                             vcfInstance = null;
-                        } else {
-                            sdfFile = singleFileSDSVManager.getFile();
                         }
                         if (!silent && bar != null) {
                             bar.step(1);
@@ -252,6 +253,7 @@ public class SDSVManager extends ICommandProgram {
                                 outputFile = FileUtils.getSubFile(annotatedCacheDir, fileName);
                             }
                         }
+                        singleFileSDSVManager.clearReader();
                         SourceOutputManager.attachAnnotatedFile(finalI, outputFile);
                     }
             ));

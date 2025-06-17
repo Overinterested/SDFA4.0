@@ -25,7 +25,7 @@ import java.util.Iterator;
 public class RefRNAElement {
     SourceRNARecord rnaRecord;
     TSynchronizedIntSet updateFileIndex;
-//    TIntSet updateFileIndex;
+    //    TIntSet updateFileIndex;
     List<int[]> overlappedSDSVRangeInDifferentSDSVCache;
     private static final HashSet<Genotype> EMPTY_GTY = new HashSet<>();
 
@@ -37,7 +37,7 @@ public class RefRNAElement {
     }
 
     public RefRNAElement(int sizeOfSample) {
-        updateFileIndex = new TSynchronizedIntSet(new TIntHashSet(sizeOfSample + 1));
+        updateFileIndex = new TSynchronizedIntSet(new TIntHashSet(sizeOfSample));
         overlappedSDSVRangeInDifferentSDSVCache = new List<>(sizeOfSample);
         for (int i = 0; i < sizeOfSample; i++) {
             overlappedSDSVRangeInDifferentSDSVCache.add(new int[]{-1, -1});
@@ -52,7 +52,14 @@ public class RefRNAElement {
      */
     public void updateRelatedSDSVIndex(int fileID, int indexOfSDSV) {
         updateFileIndex.add(fileID);
-        int[] intInterval = this.overlappedSDSVRangeInDifferentSDSVCache.fastGet(fileID);
+        int[] intInterval = null;
+        try {
+            intInterval = this.overlappedSDSVRangeInDifferentSDSVCache.fastGet(fileID);
+        } catch (Exception e) {
+            System.out.println(fileID);
+            System.out.println(this.overlappedSDSVRangeInDifferentSDSVCache.size());
+            e.printStackTrace();
+        }
         if (intInterval == null || intInterval[0] == -1) {
             this.overlappedSDSVRangeInDifferentSDSVCache.set(fileID, new int[]{indexOfSDSV, indexOfSDSV});
         } else {

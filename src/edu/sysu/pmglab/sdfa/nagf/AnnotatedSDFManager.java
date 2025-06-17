@@ -52,7 +52,9 @@ public class AnnotatedSDFManager {
         for (int i = 0; i < size; i++) {
             int finalI = i;
             tasks.add(new Pipeline((status, context) -> {
-                File sdfFile = fileManagers.valueOf(finalI).getSdfFile();
+                SingleFileSDSVManager singleFileSDSVManager = fileManagers.valueOf(finalI);
+                File sdfFile = singleFileSDSVManager.getSdfFile();
+                singleFileSDSVManager.clearReader();
                 String name = sdfFile.getName();
                 File annotatedLiveFile = FileUtils.getSubFile(annotatedDir, name);
                 if (!annotatedLiveFile.exists()) {
@@ -60,9 +62,7 @@ public class AnnotatedSDFManager {
                     cacheCount.incrementAndGet();
                 }
                 SDFReader sdfReader = new SDFReader(annotatedLiveFile, readerMode);
-                synchronized (sdsvGenomicIndexedAnnotations) {
-                    sdsvGenomicIndexedAnnotations.add(new SDSVGenomicIndexedAnnotation(finalI, sdfReader));
-                }
+                sdsvGenomicIndexedAnnotations.add(new SDSVGenomicIndexedAnnotation(finalI, sdfReader));
                 sdfReader.close();
             }));
         }
@@ -73,7 +73,6 @@ public class AnnotatedSDFManager {
             if (cacheCount.get() != 0) {
                 LogBackOptions.getRootLogger().info("Collect " + cacheCount.get() + " annotated files in the cached annotated repository.");
             }
-            CCFTable.gc();
         }));
         return tasks;
     }
@@ -247,5 +246,9 @@ public class AnnotatedSDFManager {
 
     public int sizeOfAnnotationFile() {
         return fileIndexedAnnotation.size();
+    }
+
+    private synchronized void add(SDSVGenomicIndexedAnnotation item){
+        this.fileIndexedAnnotation.add(item);
     }
 }

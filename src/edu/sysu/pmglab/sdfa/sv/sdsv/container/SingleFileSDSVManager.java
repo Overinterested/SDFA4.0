@@ -188,4 +188,7 @@ public class SingleFileSDSVManager {
         this.annotated = annotated;
         return this;
     }
+    public void clearReader(){
+        reader = null;
+    }
 }
